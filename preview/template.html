@@ -324,7 +324,10 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
       </div>
     </div>
     <figure class="hero-photo">
-      <img src="{{FLOR}}" width="640" height="800" alt="Florencia Vich, operadora láser de Silkderma, sentada en el gabinete">
+      <picture>
+        <source media="(max-width: 820px)" srcset="{{FLOR_M}}" width="320" height="400">
+        <img src="{{FLOR}}" width="640" height="800" alt="Florencia Vich, operadora láser de Silkderma, sentada en el gabinete">
+      </picture>
       <figcaption class="tag"><b>Florencia Vich</b>Operadora láser</figcaption>
     </figure>
   </div>
