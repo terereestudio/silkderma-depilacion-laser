@@ -202,7 +202,16 @@ header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--crema
 .combo-elegido .pz{float:right;font-family:var(--serif);font-size:1.15rem;color:var(--salvia-prof)}
 .combo-elegido span{display:block;color:var(--suave);font-size:.86rem;margin-top:2px}
 @media(max-width:1000px) and (min-width:821px){.combos-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:820px){.combos-grid > .combo{flex-basis:82%}}
+@media(max-width:820px){
+  .combos-grid.carrusel{gap:10px}
+  .combos-grid > .combo{flex:0 0 calc((100% - 52px) / 2);padding:18px 14px;gap:8px;border-radius:18px}
+  .combo .tit{flex-direction:column;gap:2px}
+  .combo .para{font-size:.62rem;order:-1}
+  .combo h3{font-size:1.25rem}
+  .combo .precio{font-size:1.5rem}
+  .combo ul{font-size:.84rem;gap:4px}
+  .combo .btn{align-self:stretch;padding:10px 8px;font-size:.88rem}
+}
 /* Proceso */
 .proceso{background:var(--taupe-osc);color:var(--arena)}
 .proceso h2{color:var(--crema)}
