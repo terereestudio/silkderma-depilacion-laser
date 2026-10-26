@@ -47,8 +47,8 @@ section{padding:clamp(64px,8vw,112px) 0}
 /* Header */
 header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--crema) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--arena)}
 .nav{display:flex;align-items:center;justify-content:space-between;height:68px}
-.logo{font-family:var(--serif);font-size:1.9rem;letter-spacing:.01em;font-style:italic;text-decoration:none;color:var(--taupe-osc);line-height:1}
-.logo small{display:block;font:600 .58rem/1 var(--sans);letter-spacing:.24em;text-transform:uppercase;color:var(--salvia);font-style:normal;margin-top:4px}
+.logo{display:inline-flex;flex-direction:column;align-items:flex-start;font-family:var(--serif);font-size:1.9rem;letter-spacing:.01em;font-style:italic;text-decoration:none;color:var(--taupe-osc);line-height:1}
+.logo small{display:block;font:600 .3em/1 var(--sans);text-transform:uppercase;color:var(--salvia);font-style:normal;margin-top:.22em;white-space:nowrap;letter-spacing:var(--ls,.2em);margin-right:calc(-1 * var(--ls,.2em))}
 .nav ul{display:flex;gap:28px;list-style:none;padding:0}
 .nav ul a{text-decoration:none;font-size:.95rem;color:var(--suave)}
 .nav ul a:hover{color:var(--taupe-osc)}
@@ -86,7 +86,7 @@ header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--crema
 .card{background:var(--crema);border-radius:var(--r);padding:28px;position:relative;overflow:hidden;transition:transform .35s ease,box-shadow .35s ease}
 .card::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.75) 48%,rgba(221,226,214,.5) 52%,transparent 70%);transform:translateX(-120%);pointer-events:none}
 .card:hover,.card:focus-within{transform:scale(1.03);box-shadow:0 18px 40px rgba(63,56,47,.12)}
-.card:hover::after{transition:transform .9s ease;transform:translateX(120%)}
+.card:hover::after{transition:transform 2.2s cubic-bezier(.4,0,.2,1);transform:translateX(120%)}
 .card .n{font-family:var(--serif);font-size:1rem;color:var(--salvia);text-decoration:underline;text-underline-offset:4px}
 .card h3{font-size:1.45rem;font-style:italic;margin:14px 0 8px}
 .card p{color:var(--suave);font-size:.98rem}
@@ -111,22 +111,25 @@ header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--crema
 .res-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(24px,4vw,48px)}
 .res-grid h3{font-size:1.3rem;font-style:italic;margin-bottom:12px}
 .dias-dd{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+/* Aurora: luz verde agua que se mueve despacio */
+@keyframes aurora{0%{background-position:0% 30%,100% 70%,0 0}50%{background-position:70% 0%,20% 100%,0 0}100%{background-position:100% 60%,0% 20%,0 0}}
+.aurora-osc{background:radial-gradient(45% 70% at 50% 50%,rgba(127,214,190,.55),transparent 70%),radial-gradient(40% 60% at 50% 50%,rgba(176,230,206,.35),transparent 70%),var(--salvia-osc);background-size:220% 220%,200% 200%,100% 100%}
 .dia-dd{border:1.5px solid var(--beige);background:var(--ola-clara);background-size:250% 100%;background-position:100% 0;border-radius:16px;padding:0 0 14px;text-align:center;cursor:pointer;font:inherit;color:var(--taupe-osc);overflow:hidden;transition:transform .25s,box-shadow .25s,border-color .25s;box-shadow:0 6px 16px rgba(63,56,47,.06)}
-.dia-dd .top{display:block;position:relative;background:var(--taupe-osc);color:var(--crema);font-size:.74rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:14px 8px 8px}
+.dia-dd .top{display:block;position:relative;background:var(--salvia-osc);color:var(--crema);font-size:.74rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:14px 8px 8px}
 .dia-dd .top::before,.dia-dd .top::after{content:"";position:absolute;top:5px;width:8px;height:8px;border-radius:50%;background:var(--crema)}
 .dia-dd .top::before{left:28%}.dia-dd .top::after{right:28%}
 .dia-dd b{display:block;font-family:var(--serif);font-weight:500;font-size:clamp(2.6rem,2rem + 2vw,3.4rem);line-height:1;margin:12px 0 2px}
 .dia-dd .mes{display:block;font-size:.85rem;color:var(--suave)}
 .dia-dd small{display:inline-block;font-size:.74rem;color:var(--salvia-osc);margin-top:10px;background:var(--salvia-clara);border-radius:999px;padding:3px 10px}
-.dia-dd:hover{border-color:var(--salvia);transform:translateY(-3px) rotate(-1deg);animation:ola 1.4s ease-in-out infinite alternate}
-.dia-dd[aria-pressed="true"]{background:var(--ola-osc);background-size:250% 100%;border-color:var(--salvia-osc);color:#fff;animation:ola 1.6s ease-in-out infinite alternate;transform:translateY(-3px)}
-.dia-dd[aria-pressed="true"] .top{background:var(--taupe-osc)}
+.dia-dd:not(:disabled):hover{border-color:var(--salvia);transform:translateY(-3px) rotate(-1deg);background:radial-gradient(45% 70% at 50% 50%,rgba(158,216,189,.45),transparent 70%),radial-gradient(40% 60% at 50% 50%,rgba(205,235,220,.6),transparent 70%),var(--crema);background-size:220% 220%,200% 200%,100% 100%;animation:aurora 7s ease-in-out infinite alternate}
+.dia-dd[aria-pressed="true"],.dia-dd[aria-pressed="true"]:hover{background:radial-gradient(45% 70% at 50% 50%,rgba(127,214,190,.55),transparent 70%),radial-gradient(40% 60% at 50% 50%,rgba(176,230,206,.35),transparent 70%),var(--salvia-osc);background-size:220% 220%,200% 200%,100% 100%;border-color:var(--salvia-osc);color:#fff;animation:aurora 8s ease-in-out infinite alternate;transform:translateY(-3px)}
+.dia-dd[aria-pressed="true"] .top{background:#46533F}
 .dia-dd[aria-pressed="true"] .mes{color:var(--salvia-clara)}
 .dia-dd[aria-pressed="true"] small{background:rgba(255,255,255,.18);color:#fff}
 .dia-dd:disabled{opacity:.45;cursor:default}
 .chip{border:1.5px solid var(--beige);background:var(--ola-clara);background-size:250% 100%;background-position:100% 0;border-radius:999px;padding:10px 18px;font:500 .95rem var(--sans);color:var(--taupe-osc);cursor:pointer;transition:.18s}
-.chip:not(:disabled):hover{border-color:var(--salvia);animation:ola 1.4s ease-in-out infinite alternate}
-.chip[aria-pressed="true"]{background:var(--ola-osc);background-size:250% 100%;border-color:var(--salvia-osc);color:#fff;animation:ola 1.6s ease-in-out infinite alternate}
+.chip:not(:disabled):hover{border-color:var(--salvia);background:radial-gradient(45% 80% at 50% 50%,rgba(158,216,189,.5),transparent 70%),var(--crema);background-size:220% 220%,100% 100%;animation:aurora 7s ease-in-out infinite alternate}
+.chip[aria-pressed="true"],.chip[aria-pressed="true"]:hover{background:radial-gradient(45% 80% at 50% 50%,rgba(127,214,190,.6),transparent 70%),radial-gradient(40% 70% at 50% 50%,rgba(176,230,206,.3),transparent 70%),var(--salvia-osc);background-size:220% 220%,200% 200%,100% 100%;border-color:var(--salvia-osc);color:#fff;animation:aurora 8s ease-in-out infinite alternate}
 .chip:disabled{text-decoration:line-through;opacity:.4;cursor:default}
 .slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:8px}
 .slots .chip{text-align:center;padding:9px 0;font-size:.9rem}
@@ -180,10 +183,11 @@ header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--crema
 .brillo{background:linear-gradient(90deg,var(--crema) 0%,var(--crema) 35%,#9ED8BD 50%,var(--crema) 65%,var(--crema) 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:brillo 5s ease-in-out infinite}
 @keyframes brillo{0%{background-position:100% 0}60%,100%{background-position:0 0}}
 .timeline::after{content:"";position:absolute;top:13px;left:var(--l,0px);height:2px;margin-top:-.5px;width:var(--prog,0px);background:linear-gradient(90deg,#9ED8BD,#C9EEDB);box-shadow:0 0 12px rgba(158,216,189,.7);opacity:var(--op,1);transition:width .9s cubic-bezier(.6,0,.3,1),opacity .6s}
-.step::before{transition:background .4s,border-color .4s,box-shadow .4s}
+.step::before{transition:background .4s,border-color .4s,box-shadow .4s;z-index:2}
+.timeline::after,.timeline::before{z-index:0}
 .step b,.step p{transition:color .4s,opacity .4s}
 .step.lleno::before{background:#9ED8BD;border-color:#9ED8BD}
-.step.activo::before{box-shadow:0 0 0 7px rgba(158,216,189,.22)}
+.step.activo::before{box-shadow:0 0 0 5px #4F5B4C}
 .step.lleno b{color:#B9E6D0}
 .step.lleno p{opacity:1}
 .proceso .eyebrow{color:var(--beige)}
@@ -249,16 +253,16 @@ details p{padding-bottom:20px;color:var(--suave)}
 .final p{color:var(--suave);margin-bottom:28px}
 .datos{display:flex;justify-content:center;flex-wrap:wrap;gap:12px 32px;margin-top:36px;font-size:.95rem;color:var(--suave)}
 
-footer{background:var(--arena);padding:clamp(48px,6vw,72px) 0 0;font-size:.92rem;color:var(--suave)}
-.foot-grid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:32px}
-.foot-marca .logo{font-size:2.3rem;display:inline-block}
-.foot-marca p{margin-top:14px;max-width:30ch}
-footer h3{font:600 .75rem/1 var(--sans);letter-spacing:.18em;text-transform:uppercase;color:var(--salvia);margin-bottom:14px}
-footer ul{list-style:none;padding:0;display:grid;gap:8px}
-footer a{text-decoration:none}
-footer a:hover{color:var(--taupe-osc);text-decoration:underline;text-underline-offset:3px}
-.foot-legal{display:flex;flex-wrap:wrap;justify-content:space-between;gap:10px;border-top:1px solid var(--beige);margin-top:40px;padding:20px 0;font-size:.84rem}
-@media(max-width:820px){.foot-grid{grid-template-columns:1fr 1fr}.foot-marca{grid-column:1/-1}}
+/* Footer (misma estructura que Emma Oviedo) */
+.site-footer{border-top:1px solid var(--arena);padding-block:64px 32px;font-size:.92rem;color:var(--suave);background:var(--crema)}
+.footer-grid{display:grid;gap:32px}
+.footer-grid .logo{font-size:2.6rem}
+.footer-grid ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.footer-grid a{text-decoration:none}
+.footer-grid a:hover{color:var(--texto);text-decoration:underline}
+.footer-legal{margin-top:48px;padding-top:24px;border-top:1px solid var(--arena);display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;font-size:.82rem}
+.footer-legal a{text-decoration:none}
+@media(min-width:760px){.footer-grid{grid-template-columns:1.4fr 1fr 1fr}}
 
 .wa-float{position:fixed;right:18px;bottom:18px;z-index:30;width:56px;height:56px;border-radius:50%;background:#25D366;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.18)}
 .wa-float svg{width:28px;height:28px;fill:#fff}
@@ -279,7 +283,7 @@ footer a:hover{color:var(--taupe-osc);text-decoration:underline;text-underline-o
 
 <header>
   <div class="wrap nav">
-    <a href="#inicio" class="logo">Silkderma<small>Depilación láser</small></a>
+    <a href="#inicio" class="logo"><span>Silkderma</span><small>Depilación láser</small></a>
     <nav aria-label="Principal"><ul>
       <li><a href="#dudas">Tu primera vez</a></li>
       <li><a href="#combos">Combos</a></li>
@@ -484,15 +488,13 @@ footer a:hover{color:var(--taupe-osc);text-decoration:underline;text-underline-o
 </section>
 </main>
 
-<footer>
+<footer class="site-footer">
   <div class="wrap">
-    <div class="foot-grid">
-      <div class="foot-marca">
-        <a href="#inicio" class="logo">Silkderma<small>Depilación láser</small></a>
-        <p>Florencia Vich, operadora láser. Atención personalizada para mujeres y hombres.</p>
+    <div class="footer-grid">
+      <div>
+        <a href="#inicio" class="logo"><span>Silkderma</span><small>Depilación láser</small></a>
       </div>
-      <nav aria-label="Pie de página">
-        <h3>Navegación</h3>
+      <nav aria-label="Secciones">
         <ul>
           <li><a href="#dudas">Tu primera vez</a></li>
           <li><a href="#combos">Combos</a></li>
@@ -500,16 +502,13 @@ footer a:hover{color:var(--taupe-osc);text-decoration:underline;text-underline-o
           <li><a href="#preguntas">Preguntas</a></li>
         </ul>
       </nav>
-      <div>
-        <h3>Contacto</h3>
-        <ul>
-          <li><a href="#" data-wa="Hola Flor! Quiero consultar por depilación láser." target="_blank" rel="noopener noreferrer">WhatsApp 3775 44-5169</a></li>
-          <li><a href="https://www.instagram.com/silkderma_depi.laser/" target="_blank" rel="noopener noreferrer">Instagram @silkderma_depi.laser</a></li>
-          <li>Monte Caseros, Corrientes</li>
-        </ul>
-      </div>
+      <ul>
+        <li><a href="#" data-wa="Hola Flor! Quiero consultar por depilación láser." target="_blank" rel="noopener noreferrer">WhatsApp</a></li>
+        <li><a href="https://www.instagram.com/silkderma_depi.laser/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+        <li>Monte Caseros, Corrientes</li>
+      </ul>
     </div>
-    <div class="foot-legal">
+    <div class="footer-legal">
       <span>© 2026 Silkderma · Florencia Vich, operadora láser</span>
       <a href="#">Política de privacidad</a>
     </div>
@@ -636,6 +635,17 @@ footer a:hover{color:var(--taupe-osc);text-decoration:underline;text-underline-o
     $("reservaGrid").hidden = false; $("ok").hidden = true; paso(1); pintarDias();
   });
   pintarDias();
+
+  /* ===== Logo: "Depilación láser" del mismo ancho que "Silkderma" ===== */
+  const ajustarLogo = () => document.querySelectorAll(".logo").forEach(l => {
+    const nom = l.querySelector("span"), sub = l.querySelector("small");
+    sub.style.setProperty("--ls", "0px");
+    const n = sub.textContent.length - 1;
+    const extra = (nom.getBoundingClientRect().width - sub.getBoundingClientRect().width) / n;
+    sub.style.setProperty("--ls", Math.max(0, extra) + "px");
+  });
+  ajustarLogo(); addEventListener("resize", ajustarLogo);
+  if (document.fonts) document.fonts.ready.then(ajustarLogo);
 
   /* ===== Carrusel de combos ===== */
   const cg = $("combosGrid");
