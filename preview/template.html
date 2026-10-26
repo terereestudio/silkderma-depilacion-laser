@@ -253,7 +253,14 @@ details p{padding-bottom:20px;color:var(--suave)}
 .final{text-align:center}
 .final h2{max-width:16ch;margin:14px auto 18px}
 .final p{color:var(--suave);margin-bottom:28px}
-.datos{display:flex;justify-content:center;flex-wrap:wrap;gap:12px 32px;margin-top:36px;font-size:.95rem;color:var(--suave)}
+/* Tarjetas de contacto */
+.contacto-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:48px;text-align:left}
+.ct{display:flex;align-items:center;gap:16px;padding:24px;border-radius:20px;background:#FBF9F4;border:1px solid var(--arena);color:var(--texto);text-decoration:none;transition:transform .25s,box-shadow .25s,border-color .25s}
+a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10px 26px rgba(85,99,76,.10)}
+.ct-ico{flex:0 0 22px;width:22px;height:22px;fill:none;stroke:var(--salvia-osc);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.ct span{font-size:1.02rem;line-height:1.45}
+.ct small{display:block;font-size:.8rem;color:var(--suave);margin-bottom:2px}
+@media(max-width:820px){.contacto-cards{grid-template-columns:1fr}}
 
 /* Footer (misma estructura que Emma Oviedo) */
 .site-footer{border-top:1px solid var(--arena);padding-block:64px 32px;font-size:.92rem;color:var(--suave);background:var(--crema)}
@@ -480,11 +487,10 @@ details p{padding-bottom:20px;color:var(--suave)}
     <h2>Llegá al verano con la piel lista</h2>
     <p>Elegí tu horario y lo vemos con calma.</p>
     <a class="btn" href="#turno">Reservá tu turno</a>
-    <div class="datos">
-      <span>📍 Monte Caseros</span>
-      <span>🗓 Depi Days: 5, 6, 8 y 9 de noviembre · 9 a 20:30 h</span>
-      <a href="#" data-wa="Hola Flor! Quiero consultar por depilación láser.">WhatsApp 3775 44-5169</a>
-      <a href="https://instagram.com/silkderma_depi.laser" target="_blank" rel="noopener noreferrer">@silkderma_depi.laser</a>
+    <div class="contacto-cards">
+      <a class="ct" href="#" data-wa="Hola Flor! Quiero consultar por depilación láser." target="_blank" rel="noopener noreferrer"><svg class="ct-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 19.5l1.2-3.6A8 8 0 1 1 8.4 18.6z"/></svg><span><small>WhatsApp</small>+54 9 3775 44-5169</span></a>
+      <a class="ct" href="https://www.instagram.com/silkderma_depi.laser/" target="_blank" rel="noopener noreferrer"><svg class="ct-ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6"/></svg><span><small>Instagram</small>@silkderma_depi.laser</span></a>
+      <div class="ct"><svg class="ct-ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-6.2-6.5-11a6.5 6.5 0 0 1 13 0c0 4.8-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg><span><small>Gabinete</small>Monte Caseros, Corrientes</span></div>
     </div>
   </div>
 </section>
