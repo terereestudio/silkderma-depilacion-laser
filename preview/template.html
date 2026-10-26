@@ -361,7 +361,7 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
     <div class="dudas-head" style="margin-bottom:0">
       <span class="eyebrow">Combos y sesiones</span>
       <h2>Elegí tu combo</h2>
-      <p>Precio fijo y pago online con Mercado Pago, o en efectivo el día del turno.</p>
+      <p>Precio fijo. Podés pagar por transferencia o en efectivo.</p>
       <span class="para-todos">Mujeres y hombres por igual: el láser es para todos</span>
     </div>
     <div class="combos-grid carrusel" id="combosGrid"></div>
@@ -409,8 +409,8 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
             <label>WhatsApp<input name="telefono" type="tel" required maxlength="20" pattern="\+?[0-9 ]{8,20}" autocomplete="tel" placeholder="Ej. 3775 123456"></label>
             <fieldset>
               <legend>¿Cómo querés abonar?</legend>
-              <label class="pago"><input type="radio" name="pago" value="mp" checked><span>Mercado Pago<small>Pagás ahora y enviás el comprobante por WhatsApp.</small></span></label>
-              <label class="pago"><input type="radio" name="pago" value="efectivo"><span>Efectivo<small>Pagás el día del turno. Flor confirma tu reserva por WhatsApp.</small></span></label>
+              <label class="pago"><input type="radio" name="pago" value="transferencia" checked><span>Transferencia<small>Te enviaremos los datos de la cuenta para que puedas transferir a través de WhatsApp. Envíanos el comprobante, por favor.</small></span></label>
+              <label class="pago"><input type="radio" name="pago" value="efectivo"><span>Efectivo<small>Flor confirmará tu reserva por WhatsApp.</small></span></label>
             </fieldset>
             <p class="hp" aria-hidden="true"><label>No completar<input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
             <button class="btn" type="submit" id="confirmar" style="justify-content:center">Reservar turno</button>
@@ -644,13 +644,12 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
       li.append(a); lista.append(li);
     };
     $("okTit").textContent = turno;
-    if (pago === "mp" && combo) {
-      $("okTxt").textContent = "Aboná tu combo con Mercado Pago y mandale el comprobante a Flor. Con eso tu turno queda confirmado.";
-      item("Paso 1", "Pagar " + combo.precio + " con Mercado Pago", combo.mp, true);
-      item("Paso 2", "Enviar comprobante por WhatsApp", wa(base + "\nPago: Mercado Pago. Te adjunto el comprobante."), true);
+    if (pago === "transferencia") {
+      $("okTxt").textContent = "Enviá tu reserva por WhatsApp. Te mandamos los datos de la cuenta para transferir, y después nos enviás el comprobante. Tu turno queda pendiente hasta que Flor lo confirme.";
+      item("Último paso", "Enviar reserva por WhatsApp", wa(base + "\nPago: transferencia. Quiero recibir los datos de la cuenta."), true);
     } else {
-      $("okTxt").textContent = "Enviá tu reserva por WhatsApp. Tu turno queda pendiente hasta que Flor lo confirme.";
-      item("Último paso", "Enviar reserva por WhatsApp", wa(base + "\nPago: " + (pago === "mp" ? "Mercado Pago (a coordinar)" : "efectivo el día del turno") + "."), true);
+      $("okTxt").textContent = "Enviá tu reserva por WhatsApp. Flor confirmará tu reserva por WhatsApp.";
+      item("Último paso", "Enviar reserva por WhatsApp", wa(base + "\nPago: efectivo el día del turno."), true);
     }
     $("reservaGrid").hidden = true; $("ok").hidden = false; $("ok").focus();
   });
