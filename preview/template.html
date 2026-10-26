@@ -3,8 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Silkderma · Depilación láser en Monte Caseros</title>
-<meta name="description" content="Depilación láser con Florencia Vich en Monte Caseros, Corrientes. Atención personalizada para mujeres y hombres. Reservá tu turno por WhatsApp.">
+<title>Depilación láser en Monte Caseros | Silkderma · Florencia Vich</title>
+<meta name="description" content="Depilación láser en Monte Caseros, Corrientes, con Florencia Vich. Depi Days de noviembre: reservá tu turno online y llegá al verano con la piel lista. Mujeres y hombres.">
+<link rel="canonical" href="https://www.silkderma.com.ar/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_AR">
+<meta property="og:title" content="Silkderma · Depilación láser en Monte Caseros">
+<meta property="og:description" content="Depi Days de noviembre: reservá tu turno online y empezá láser antes del verano.">
+<meta property="og:url" content="https://www.silkderma.com.ar/">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"HealthAndBeautyBusiness","name":"Silkderma · Depilación láser","description":"Depilación láser con atención personalizada para mujeres y hombres en Monte Caseros, Corrientes.","url":"https://www.silkderma.com.ar/","telephone":"+54 9 3775 44-5169","address":{"@type":"PostalAddress","addressLocality":"Monte Caseros","addressRegion":"Corrientes","addressCountry":"AR"},"areaServed":["Monte Caseros","Corrientes"],"employee":{"@type":"Person","name":"Florencia Vich","jobTitle":"Operadora láser"},"sameAs":["https://www.instagram.com/silkderma_depi.laser/"]}
+</script>
 <style>
 :root{
   --arena:#E9E3D8; --crema:#F7F4EE; --beige:#C9BFAE; --taupe:#5E5446; --taupe-osc:#3F382F;
@@ -39,7 +48,7 @@ header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--crema
 .nav ul{display:flex;gap:28px;list-style:none;padding:0}
 .nav ul a{text-decoration:none;font-size:.95rem;color:var(--suave)}
 .nav ul a:hover{color:var(--taupe-osc)}
-.nav .btn{padding:10px 18px;font-size:.9rem}
+.nav .btn{padding:10px 18px;font-size:.9rem;white-space:nowrap}
 @media(max-width:820px){.nav ul{display:none}}
 
 /* Hero */
@@ -75,47 +84,71 @@ header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--crema
 .card h3{font-size:1.45rem;font-style:italic;margin:14px 0 8px}
 .card p{color:var(--suave);font-size:.98rem}
 
-/* Reserva de turnos */
-.reserva{background:var(--crema)}
+/* Depi Days: reserva de turnos */
+.reserva{background:var(--arena)}
 .res-box{background:#fff;border-radius:28px;padding:clamp(22px,4vw,48px);box-shadow:0 20px 60px rgba(63,56,47,.08)}
 .res-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:16px;margin-bottom:28px}
-.res-head p{color:var(--suave);max-width:40ch}
-.pasos{display:flex;gap:8px;font-size:.82rem;color:var(--suave)}
+.res-head h2 .dd{font-style:normal;letter-spacing:-.01em}
+.res-head p{color:var(--suave);max-width:46ch}
+.res-head .gancho{font-family:var(--serif);font-style:italic;font-size:1.2rem;color:var(--salvia-osc);margin-bottom:6px}
+.pasos{display:flex;flex-wrap:wrap;gap:8px;font-size:.82rem;color:var(--suave)}
 .pasos span{padding:6px 12px;border-radius:999px;background:var(--crema)}
 .pasos span.on{background:var(--salvia-osc);color:#fff}
-.res-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(24px,4vw,48px)}
-.mes{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-.mes b{font-family:var(--serif);font-style:italic;font-weight:500;font-size:1.4rem;color:var(--taupe-osc)}
-.mes button{width:38px;height:38px;border-radius:50%;border:1.5px solid var(--beige);background:var(--crema);cursor:pointer;color:var(--taupe-osc);font-size:1.1rem}
-.mes button:disabled{opacity:.35;cursor:default}
-.dias{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;text-align:center}
-.dias .dn{font-size:.72rem;font-weight:600;letter-spacing:.08em;color:var(--suave);padding-bottom:4px}
-.dia{aspect-ratio:1;border-radius:50%;border:0;background:transparent;font:500 .95rem var(--sans);color:#B5AC9E;cursor:default;position:relative}
-.dia.disp{color:var(--taupe-osc);background:var(--salvia-clara);cursor:pointer}
-.dia.disp:hover{background:#cdd5c3}
-.dia[aria-pressed="true"]{background:var(--salvia-osc);color:#fff}
-.leyenda{display:flex;gap:16px;margin-top:14px;font-size:.82rem;color:var(--suave)}
-.leyenda i{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--salvia-clara);margin-right:6px;vertical-align:middle}
-.horas h3,.datos-form h3{font-size:1.3rem;font-style:italic;margin-bottom:12px}
-.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:8px}
+.res-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(24px,4vw,48px)}
+.res-grid h3{font-size:1.3rem;font-style:italic;margin-bottom:12px}
+.dias-dd{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.dia-dd{border:1.5px solid var(--beige);background:var(--crema);border-radius:20px;padding:16px 14px;text-align:left;cursor:pointer;font:inherit;color:var(--taupe-osc);transition:.18s}
+.dia-dd:hover{border-color:var(--salvia)}
+.dia-dd b{display:block;font-family:var(--serif);font-weight:500;font-size:2.2rem;line-height:1}
+.dia-dd span{display:block;font-size:.85rem}
+.dia-dd span:first-child{text-transform:capitalize}
+.dia-dd small{display:block;font-size:.78rem;color:var(--salvia-osc);margin-top:8px}
+.dia-dd[aria-pressed="true"]{background:var(--salvia-osc);border-color:var(--salvia-osc);color:#fff}
+.dia-dd[aria-pressed="true"] small{color:var(--salvia-clara)}
+.dia-dd:disabled{opacity:.45;cursor:default}
 .chip{border:1.5px solid var(--beige);background:var(--crema);border-radius:999px;padding:10px 18px;font:500 .95rem var(--sans);color:var(--taupe-osc);cursor:pointer;transition:.18s}
 .chip:hover{border-color:var(--salvia)}
 .chip[aria-pressed="true"]{background:var(--salvia-osc);border-color:var(--salvia-osc);color:#fff}
-.slots .chip{text-align:center;padding:10px 0}
+.chip:disabled{text-decoration:line-through;opacity:.4;cursor:default}
+.slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:8px}
+.slots .chip{text-align:center;padding:9px 0;font-size:.9rem}
 .vacio{color:var(--suave);font-size:.95rem}
-.datos-form{margin-top:24px;display:grid;gap:12px}
+.datos-form{margin-top:26px;display:grid;gap:12px}
 .datos-form label{display:grid;gap:6px;font-size:.88rem;font-weight:600;color:var(--taupe-osc)}
-.datos-form input,.datos-form select{font:400 1rem var(--sans);padding:12px 14px;border-radius:12px;border:1.5px solid var(--beige);background:var(--crema);color:var(--texto);width:100%}
+.datos-form input:not([type=checkbox]):not([type=radio]),.datos-form select{font:400 1rem var(--sans);padding:12px 14px;border-radius:12px;border:1.5px solid var(--beige);background:var(--crema);color:var(--texto);width:100%}
 .datos-form input:focus,.datos-form select:focus{border-color:var(--salvia);outline:none}
+.datos-form fieldset{border:0;padding:0;display:grid;gap:8px}
+.datos-form legend{font-size:.88rem;font-weight:600;color:var(--taupe-osc);margin-bottom:6px}
+.pago{display:flex!important;gap:12px;align-items:center;font-weight:500!important;border:1.5px solid var(--beige);border-radius:14px;padding:12px 14px;cursor:pointer;background:var(--crema)}
+.pago:has(input:checked){border-color:var(--salvia-osc);background:var(--salvia-clara)}
+.pago small{display:block;font-weight:400;color:var(--suave)}
 .datos-form .check{display:flex;gap:10px;align-items:start;font-weight:400;color:var(--suave)}
-.datos-form .check input{width:auto;margin-top:4px}
+.datos-form .check input{margin-top:4px}
 .hp{position:absolute;left:-9999px}
-.ok{text-align:center;padding:24px 0}
-.ok h3{font-size:clamp(1.8rem,1.4rem + 1.6vw,2.4rem);font-style:italic;margin:12px 0}
-.ok p{color:var(--suave);max-width:46ch;margin:0 auto 22px}
-.ok .ctas{display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.ok{text-align:center;padding:12px 0}
+.ok h3{font-size:clamp(1.7rem,1.3rem + 1.6vw,2.3rem);font-style:italic;margin:12px 0}
+.ok p{color:var(--suave);max-width:48ch;margin:0 auto 22px}
+.ok ol{list-style:none;padding:0;display:grid;gap:12px;max-width:420px;margin:0 auto 18px}
+.ok ol li{display:grid;gap:6px;justify-items:center}
+.ok ol li span{font-size:.85rem;color:var(--suave)}
+.ok .btn{justify-content:center;min-width:280px}
+.btn[aria-disabled="true"]{opacity:.5;pointer-events:none}
 .demo{font-size:.8rem;color:var(--suave);margin-top:18px}
 @media(max-width:820px){.res-grid{grid-template-columns:1fr}}
+
+/* Combos */
+.combos{background:var(--crema)}
+.combos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+.combo{background:var(--crema);border-radius:var(--r);padding:28px;display:flex;flex-direction:column;gap:10px}
+.combo.destacado{background:var(--taupe-osc);color:var(--arena)}
+.combo.destacado h3,.combo.destacado .precio{color:var(--crema)}
+.combo h3{font-size:1.6rem;font-style:italic}
+.combo .precio{font-family:var(--serif);font-size:2rem;color:var(--taupe-osc)}
+.combo ul{padding-left:18px;color:inherit;opacity:.85;font-size:.95rem;flex:1}
+.combo .btn{justify-content:center}
+.combo.destacado .btn{background:var(--crema);color:var(--taupe-osc)}
+.combos-nota{text-align:center;color:var(--suave);font-size:.92rem;margin-top:22px}
+@media(max-width:820px){.combos-grid{display:flex}}
 /* Proceso */
 .proceso{background:var(--taupe-osc);color:var(--arena)}
 .proceso h2{color:var(--crema)}
@@ -150,6 +183,20 @@ header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--crema
 .sobre-grid p{color:var(--suave);margin-top:16px;max-width:52ch}
 blockquote{margin-top:24px;padding-left:18px;border-left:2px solid var(--salvia);font-family:var(--serif);font-style:italic;font-size:1.25rem;color:var(--taupe-osc)}
 @media(max-width:820px){.sobre-grid{grid-template-columns:1fr}.sobre-grid img{max-width:320px}}
+
+/* Instagram (fachada: miniaturas locales + enlace externo) */
+.insta-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:16px;margin-bottom:32px}
+.insta-head p{color:var(--suave);margin-top:10px}
+.insta-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+.ig{position:relative;display:block;border-radius:16px;overflow:hidden;aspect-ratio:4/5;background:var(--arena)}
+.ig img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.ig:hover img{transform:scale(1.04)}
+.ig .tipo{position:absolute;left:10px;top:10px;background:rgba(247,244,238,.92);color:var(--taupe-osc);font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:999px}
+.ig .play{position:absolute;inset:0;margin:auto;width:46px;height:46px;border-radius:50%;background:rgba(247,244,238,.9);display:grid;place-items:center}
+.ig .play::after{content:"";border-left:13px solid var(--taupe-osc);border-top:8px solid transparent;border-bottom:8px solid transparent;margin-left:4px}
+.ig-aviso{font-size:.82rem;color:var(--suave);margin-top:16px}
+@media(max-width:1000px){.insta-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:820px){.insta-grid{display:flex}.insta-grid > *{flex-basis:62%}}
 
 /* FAQ */
 .faq{background:var(--salvia-clara)}
@@ -192,10 +239,12 @@ footer a{text-decoration:none}
     <a href="#inicio" class="logo">Silkderma<small>Depilación láser</small></a>
     <nav aria-label="Principal"><ul>
       <li><a href="#dudas">Tu primera vez</a></li>
-      <li><a href="#turno">Turnos</a></li>
-            <li><a href="#preguntas">Preguntas</a></li>
+      <li><a href="#combos">Combos</a></li>
+      <li><a href="#turno">Depi Days</a></li>
+            <li><a href="#instagram">Instagram</a></li>
+      <li><a href="#preguntas">Preguntas</a></li>
     </ul></nav>
-    <a class="btn" href="#turno">Reservá</a>
+    <a class="btn" href="#turno">Reservá tu turno</a>
   </div>
 </header>
 
@@ -203,11 +252,11 @@ footer a{text-decoration:none}
 <section class="hero" id="inicio">
   <div class="wrap hero-grid">
     <div>
-      <span class="eyebrow">Monte Caseros</span>
+      <span class="eyebrow">Depilación láser · Monte Caseros</span>
       <h1>Piel suave, <em>sin apuros</em> y con alguien que te explica todo.</h1>
       <p class="lead">Depilación láser con atención personalizada, para mujeres y hombres.</p>
       <div class="ctas">
-        <a class="btn" href="#turno">Reservá tu turno</a>
+        <a class="btn" href="#turno">Reservá en los Depi Days</a>
         <a class="btn btn-ghost" href="#dudas">Tengo dudas</a>
       </div>
     </div>
@@ -235,55 +284,65 @@ footer a{text-decoration:none}
   </div>
 </section>
 
+<section class="combos" id="combos">
+  <div class="wrap">
+    <div class="dudas-head" style="margin-bottom:0">
+      <span class="eyebrow">Combos y sesiones</span>
+      <h2>Elegí tu combo</h2>
+      <p>Precio fijo y pago online con Mercado Pago, o en efectivo el día del turno.</p>
+    </div>
+    <div class="combos-grid carrusel" id="combosGrid"></div>
+    <span class="desliza" aria-hidden="true">Deslizá →</span>
+    <p class="combos-nota"><span class="pend">[COMPLETAR: combos, sesiones y precios que confirme Flor]</span></p>
+  </div>
+</section>
+
 <section class="reserva" id="turno">
   <div class="wrap">
     <div class="res-box">
       <div class="res-head">
         <div>
-          <span class="eyebrow">Turnos online</span>
-          <h2 style="margin:12px 0 10px">Reservá tu turno</h2>
-          <p>Elegí el día y el horario que te quede cómodo. Podés abonarlo más adelante.</p>
+          <span class="eyebrow">Noviembre · Monte Caseros</span>
+          <h2 style="margin:12px 0 10px"><span class="dd"><span aria-hidden="true">✨</span> Depi Days <span aria-hidden="true">✨</span></span></h2>
+          <p class="gancho">¿Ya pensaste en empezar láser antes del verano?</p>
+          <p>Solo 4 días de turnos en noviembre. Elegí el tuyo y llegá al verano con la piel lista.</p>
         </div>
-        <div class="pasos" aria-hidden="true"><span class="on" id="p1">1 · Día</span><span id="p2">2 · Horario</span><span id="p3">3 · Tus datos</span></div>
+        <div class="pasos" aria-hidden="true"><span class="on" id="p1">1 · Día</span><span id="p2">2 · Horario</span><span id="p3">3 · Datos y pago</span></div>
       </div>
 
       <div class="res-grid" id="reservaGrid">
         <div>
-          <div class="mes">
-            <button type="button" id="prev" aria-label="Mes anterior">‹</button>
-            <b id="mesTxt" aria-live="polite"></b>
-            <button type="button" id="next" aria-label="Mes siguiente">›</button>
-          </div>
-          <div class="dias" id="dias" role="grid" aria-label="Días disponibles"></div>
-          <div class="leyenda"><span><i></i>Con horarios libres</span></div>
+          <h3>Elegí tu Depi Day</h3>
+          <div class="dias-dd" id="dias" role="group" aria-label="Días de turnos"></div>
         </div>
         <div>
-          <div class="horas">
-            <h3 id="horasTit">Elegí un día</h3>
-            <div class="slots" id="slots"><p class="vacio">Los días en verde tienen horarios libres.</p></div>
-          </div>
+          <h3 id="horasTit">Horarios</h3>
+          <div class="slots" id="slots"><p class="vacio">Elegí un día para ver los horarios libres.</p></div>
           <form class="datos-form" id="form" name="turno" method="POST" hidden novalidate>
-            <h3>Tus datos</h3>
-            <label>Nombre<input name="nombre" required maxlength="60" autocomplete="given-name"></label>
-            <label>WhatsApp<input name="telefono" type="tel" required maxlength="20" pattern="[0-9 +()-]{8,20}" autocomplete="tel" placeholder="Ej. 3775 123456"></label>
-            <label>Zona a tratar (opcional)<select name="zona"><option value="">Lo vemos en la consulta</option><option>[COMPLETAR: zonas]</option></select></label>
+            <h3 style="margin:0">Tus datos</h3>
+            <label>Combo<select name="combo" id="comboSel" required></select></label>
+            <label>Nombre y apellido<input name="nombre" required maxlength="60" autocomplete="name"></label>
+            <label>WhatsApp<input name="telefono" type="tel" required maxlength="20" pattern="\+?[0-9 ]{8,20}" autocomplete="tel" placeholder="Ej. 3775 123456"></label>
+            <fieldset>
+              <legend>¿Cómo querés abonar?</legend>
+              <label class="pago"><input type="radio" name="pago" value="mp" checked><span>Mercado Pago<small>Pagás ahora y enviás el comprobante por WhatsApp.</small></span></label>
+              <label class="pago"><input type="radio" name="pago" value="efectivo"><span>Efectivo<small>Pagás el día del turno. Flor confirma tu reserva por WhatsApp.</small></span></label>
+            </fieldset>
             <p class="hp" aria-hidden="true"><label>No completar<input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
             <label class="check"><input type="checkbox" name="acepto" required> Acepto la <a href="#">política de privacidad</a>.</label>
-            <button class="btn" type="submit" id="confirmar">Confirmar turno</button>
+            <button class="btn" type="submit" id="confirmar" style="justify-content:center">Reservar turno</button>
           </form>
         </div>
       </div>
 
       <div class="ok" id="ok" hidden tabindex="-1">
-        <span class="eyebrow">Turno reservado</span>
+        <span class="eyebrow">Tu Depi Day</span>
         <h3 id="okTit"></h3>
-        <p>Te escribo por WhatsApp para confirmarlo y explicarte cómo preparar la zona. Podés abonarlo ahora o más adelante.</p>
-        <div class="ctas">
-          <a class="btn" href="#" id="pagar" target="_blank" rel="noopener noreferrer">Abonar con Mercado Pago</a>
-          <a class="btn btn-ghost" href="#" id="otro">Reservar otro turno</a>
-        </div>
+        <p id="okTxt"></p>
+        <ol id="okPasos"></ol>
+        <a class="btn btn-ghost" href="#" id="otro">Reservar otro turno</a>
       </div>
-      <p class="demo">Vista previa: los horarios son de ejemplo. En la versión final, Flor los carga desde su panel y los turnos tomados se bloquean solos.</p>
+      <p class="demo">Tu turno queda reservado cuando Flor lo confirma por WhatsApp.</p>
     </div>
   </div>
 </section>
@@ -316,6 +375,29 @@ footer a{text-decoration:none}
   </div>
 </section>
 
+<section class="insta" id="instagram">
+  <div class="wrap">
+    <div class="insta-head">
+      <div>
+        <span class="eyebrow">Instagram</span>
+        <h2>Seguime en @silkderma_depi.laser</h2>
+        <p>Tips, respuestas a tus dudas y cómo es una sesión por dentro.</p>
+      </div>
+      <a class="btn btn-ghost" href="https://www.instagram.com/silkderma_depi.laser/" target="_blank" rel="noopener noreferrer">Ver perfil en Instagram</a>
+    </div>
+    <div class="insta-grid carrusel">
+      <a class="ig" href="https://www.instagram.com/silkderma_depi.laser/" target="_blank" rel="noopener noreferrer"><img src="{{IG:reel-1}}" width="480" height="600" alt="Florencia Vich con el equipo láser: cómo soy y cómo me ven" loading="lazy"><span class="tipo">Post</span></a>
+      <a class="ig" href="https://www.instagram.com/silkderma_depi.laser/" target="_blank" rel="noopener noreferrer"><img src="{{IG:post-1}}" width="480" height="600" alt="Placa: ¿Qué esperás para llegar depilada al verano? Enero 2027" loading="lazy"><span class="tipo">Post</span></a>
+      <a class="ig" href="https://www.instagram.com/silkderma_depi.laser/" target="_blank" rel="noopener noreferrer"><img src="{{IG:reel-2}}" width="480" height="600" alt="Reel de Florencia Vich en el gabinete" loading="lazy"><span class="tipo">Reel</span><span class="play" aria-hidden="true"></span></a>
+      <a class="ig" href="https://www.instagram.com/silkderma_depi.laser/" target="_blank" rel="noopener noreferrer"><img src="{{IG:post-2}}" width="480" height="600" alt="Placa: Quiero hacerme láser, pero tengo mil preguntas" loading="lazy"><span class="tipo">Post</span></a>
+      <a class="ig" href="https://www.instagram.com/silkderma_depi.laser/" target="_blank" rel="noopener noreferrer"><img src="{{IG:post-3}}" width="480" height="600" alt="Placa: ¿Me va a doler?" loading="lazy"><span class="tipo">Post</span></a>
+      <a class="ig" href="https://www.instagram.com/silkderma_depi.laser/" target="_blank" rel="noopener noreferrer"><img src="{{IG:post-4}}" width="480" height="600" alt="Placa: ¿Y si me da vergüenza?" loading="lazy"><span class="tipo">Post</span></a>
+    </div>
+    <span class="desliza" aria-hidden="true">Deslizá →</span>
+    <p class="ig-aviso">Al tocar una publicación se abre Instagram (Meta) en otra pestaña.</p>
+  </div>
+</section>
+
 <section class="faq" id="preguntas">
   <div class="wrap">
     <div class="dudas-head" style="margin-bottom:0">
@@ -333,13 +415,14 @@ footer a{text-decoration:none}
 
 <section class="final">
   <div class="wrap">
-    <span class="eyebrow">¿Empezamos?</span>
-    <h2>Podés empezar aunque tengas mil dudas</h2>
+    <span class="eyebrow">Podés empezar aunque tengas mil dudas</span>
+    <h2>Llegá al verano con la piel lista</h2>
     <p>Elegí tu horario y lo vemos con calma.</p>
     <a class="btn" href="#turno">Reservá tu turno</a>
     <div class="datos">
       <span>📍 Monte Caseros</span>
-      <span>🕘 <span class="pend">[COMPLETAR: horarios]</span></span>
+      <span>🗓 Depi Days: 5, 6, 8 y 9 de noviembre · 9 a 20:30 h</span>
+      <a href="#" data-wa="Hola Flor! Quiero consultar por depilación láser.">WhatsApp 3775 44-5169</a>
       <a href="https://instagram.com/silkderma_depi.laser" target="_blank" rel="noopener noreferrer">@silkderma_depi.laser</a>
     </div>
   </div>
@@ -359,54 +442,74 @@ footer a{text-decoration:none}
   </a>
 </div>
 
-<a class="wa-float" href="https://wa.me/5493775500020?text=Hola%20Flor%2C%20quiero%20consultar%20por%20depilaci%C3%B3n%20l%C3%A1ser." target="_blank" rel="noopener noreferrer" aria-label="Consultar por WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.3.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg></a>
+<a class="wa-float" href="#" data-wa="Hola Flor! Quiero consultar por depilación láser." target="_blank" rel="noopener noreferrer" aria-label="Consultar por WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.2c-.2.6-1.3 1.2-1.8 1.2-.5.1-1 .2-3.3-.7-2.8-1.1-4.6-4-4.7-4.2-.1-.2-1.1-1.5-1.1-2.9s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.3.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg></a>
 
 <script>
 "use strict";
 (() => {
-  // DEMO: en la versión final la disponibilidad viene de /api/disponibilidad (Netlify Function).
-  const HORARIOS = ["09:00","10:00","11:00","16:00","17:00","18:00","19:00"];
-  const hoy = new Date(); hoy.setHours(0,0,0,0);
-  const limite = new Date(hoy); limite.setDate(limite.getDate() + 45);
-  const libres = d => { // demo determinístico: lunes a sábado, algunos horarios ocupados
-    if (d.getDay() === 0 || d < hoy || d > limite) return [];
-    if (d.getDay() === 6) return HORARIOS.slice(0, 3);
-    return HORARIOS.filter((_, i) => (d.getDate() * 7 + i * 3) % 5 !== 0);
-  };
-  const $ = id => document.getElementById(id);
-  const fmtMes = new Intl.DateTimeFormat("es-AR", { month: "long", year: "numeric" });
-  const fmtDia = new Intl.DateTimeFormat("es-AR", { weekday: "long", day: "numeric", month: "long" });
-  let ver = new Date(hoy.getFullYear(), hoy.getMonth(), 1), dia = null, hora = null;
-  const paso = n => ["p1","p2","p3"].forEach((p, i) => $(p).classList.toggle("on", i < n));
+  /* ===== Datos editables ===== */
+  const WHATSAPP = "5493775445169";
+  // Depi Days de noviembre: 9:00 a 20:30, turnos cada 40 minutos.
+  const DEPIDAYS = ["2026-11-05", "2026-11-06", "2026-11-08", "2026-11-09"];
+  const INICIO = 9 * 60, FIN = 20 * 60 + 30, DURACION = 40;
+  // Turnos ya tomados (los marca Flor). Ej.: "2026-11-05": ["09:00", "10:20"]
+  const RESERVADOS = { "2026-11-05": [], "2026-11-06": [], "2026-11-08": [], "2026-11-09": [] };
+  // Combos: nombre, detalle, precio y link de pago fijo de Mercado Pago (mpago.la/...).
+  const COMBOS = [
+    { id: "c1", nombre: "[COMPLETAR] Combo 1", detalle: ["[COMPLETAR] zonas", "[COMPLETAR] sesiones"], precio: "$ [COMPLETAR]", mp: "" },
+    { id: "c2", nombre: "[COMPLETAR] Combo 2", detalle: ["[COMPLETAR] zonas", "[COMPLETAR] sesiones"], precio: "$ [COMPLETAR]", mp: "", destacado: true },
+    { id: "c3", nombre: "[COMPLETAR] Pack de sesiones", detalle: ["[COMPLETAR] zonas", "[COMPLETAR] sesiones"], precio: "$ [COMPLETAR]", mp: "" }
+  ];
 
-  const pintarMes = () => {
-    const m = fmtMes.format(ver); $("mesTxt").textContent = m[0].toUpperCase() + m.slice(1);
-    $("prev").disabled = ver <= new Date(hoy.getFullYear(), hoy.getMonth(), 1);
-    $("next").disabled = new Date(ver.getFullYear(), ver.getMonth() + 1, 1) > limite;
+  /* ===== Utilidades ===== */
+  const $ = id => document.getElementById(id);
+  const el = (tag, props = {}, txt) => { const e = document.createElement(tag); Object.assign(e, props); if (txt !== undefined) e.textContent = txt; return e; };
+  const wa = txt => "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(txt);
+  const fecha = s => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
+  const fmtLargo = new Intl.DateTimeFormat("es-AR", { weekday: "long", day: "numeric", month: "long" });
+  const fmtDiaSem = new Intl.DateTimeFormat("es-AR", { weekday: "long" });
+  const hhmm = m => String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(m % 60).padStart(2, "0");
+  const HORARIOS = []; for (let m = INICIO; m <= FIN; m += DURACION) HORARIOS.push(hhmm(m));
+  const hoy = new Date(); hoy.setHours(0, 0, 0, 0);
+  const libres = d => HORARIOS.filter(h => !(RESERVADOS[d] || []).includes(h));
+
+  /* ===== Enlaces generales de WhatsApp ===== */
+  document.querySelectorAll("[data-wa]").forEach(a => { a.href = wa(a.dataset.wa); });
+
+  /* ===== Combos ===== */
+  COMBOS.forEach(c => {
+    const card = el("article", { className: "combo" + (c.destacado ? " destacado" : "") });
+    card.append(el("h3", {}, c.nombre), el("p", { className: "precio" }, c.precio));
+    const ul = el("ul"); c.detalle.forEach(t => ul.append(el("li", {}, t))); card.append(ul);
+    const b = el("a", { className: "btn", href: "#turno" }, "Reservar con este combo");
+    b.addEventListener("click", () => { $("comboSel").value = c.id; });
+    card.append(b); $("combosGrid").append(card);
+    $("comboSel").append(el("option", { value: c.id }, c.nombre + " · " + c.precio));
+  });
+  $("comboSel").append(el("option", { value: "consulta" }, "Todavía no sé, quiero consultar"));
+
+  /* ===== Calendario Depi Days ===== */
+  let dia = null, hora = null;
+  const paso = n => ["p1", "p2", "p3"].forEach((p, i) => $(p).classList.toggle("on", i < n));
+  const pintarDias = () => {
     const cont = $("dias"); cont.replaceChildren();
-    ["L","M","M","J","V","S","D"].forEach(t => { const s = document.createElement("span"); s.className = "dn"; s.textContent = t; cont.append(s); });
-    const offset = (ver.getDay() + 6) % 7;
-    for (let i = 0; i < offset; i++) cont.append(document.createElement("span"));
-    const total = new Date(ver.getFullYear(), ver.getMonth() + 1, 0).getDate();
-    for (let n = 1; n <= total; n++) {
-      const d = new Date(ver.getFullYear(), ver.getMonth(), n);
-      const b = document.createElement("button");
-      b.type = "button"; b.className = "dia"; b.textContent = n;
-      const ok = libres(d).length > 0;
-      if (ok) { b.classList.add("disp"); b.addEventListener("click", () => elegirDia(d)); }
-      else b.disabled = true;
-      b.setAttribute("aria-label", fmtDia.format(d) + (ok ? ", con horarios" : ", sin horarios"));
-      b.setAttribute("aria-pressed", String(!!dia && d.getTime() === dia.getTime()));
+    DEPIDAYS.forEach(d => {
+      const f = fecha(d), n = libres(d).length, pasado = f < hoy;
+      const b = el("button", { type: "button", className: "dia-dd", disabled: pasado || n === 0 });
+      b.append(el("span", {}, fmtDiaSem.format(f)), el("b", {}, String(f.getDate())), el("span", {}, "de noviembre"),
+        el("small", {}, pasado ? "Finalizado" : n ? n + " turnos libres" : "Completo"));
+      b.setAttribute("aria-pressed", String(d === dia));
+      b.addEventListener("click", () => elegirDia(d));
       cont.append(b);
-    }
+    });
   };
   const elegirDia = d => {
-    dia = d; hora = null; $("form").hidden = true; paso(2); pintarMes();
-    $("horasTit").textContent = fmtDia.format(d);
+    dia = d; hora = null; $("form").hidden = true; paso(2); pintarDias();
+    $("horasTit").textContent = fmtLargo.format(fecha(d));
     const s = $("slots"); s.replaceChildren();
-    libres(d).forEach(h => {
-      const b = document.createElement("button");
-      b.type = "button"; b.className = "chip"; b.textContent = h; b.setAttribute("aria-pressed", "false");
+    HORARIOS.forEach(h => {
+      const b = el("button", { type: "button", className: "chip", disabled: (RESERVADOS[d] || []).includes(h) }, h);
+      b.setAttribute("aria-pressed", "false");
       b.addEventListener("click", () => {
         s.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", "false"));
         b.setAttribute("aria-pressed", "true"); hora = h; $("form").hidden = false; paso(3);
@@ -414,26 +517,45 @@ footer a{text-decoration:none}
       s.append(b);
     });
   };
-  $("prev").addEventListener("click", () => { ver.setMonth(ver.getMonth() - 1); pintarMes(); });
-  $("next").addEventListener("click", () => { ver.setMonth(ver.getMonth() + 1); pintarMes(); });
 
+  /* ===== Envío de la reserva ===== */
   const cargado = Date.now();
   $("form").addEventListener("submit", e => {
     e.preventDefault();
     const f = e.target;
     if (f.elements["bot-field"].value || Date.now() - cargado < 3000) return; // honeypot + trampa de tiempo
     if (!f.checkValidity()) { f.reportValidity(); return; }
-    $("confirmar").disabled = true;
-    $("okTit").textContent = fmtDia.format(dia) + " · " + hora + " h";
-    $("pagar").href = "#"; // [COMPLETAR: link de pago de Mercado Pago]
+    const combo = COMBOS.find(c => c.id === f.elements.combo.value);
+    const pago = f.elements.pago.value;
+    const turno = fmtLargo.format(fecha(dia)) + " · " + hora + " h";
+    const base = "Hola Flor! Quiero reservar un turno en los Depi Days.\n" +
+      "Día: " + turno + "\nNombre: " + f.elements.nombre.value.trim() + "\nWhatsApp: " + f.elements.telefono.value.trim() +
+      "\nCombo: " + (combo ? combo.nombre : "A consultar");
+    const lista = $("okPasos"); lista.replaceChildren();
+    const item = (txt, label, href, ext) => {
+      const li = el("li"); li.append(el("span", {}, txt));
+      const a = el("a", { className: "btn", href: href || "#" }, label);
+      if (!href) a.setAttribute("aria-disabled", "true");
+      if (ext) { a.target = "_blank"; a.rel = "noopener noreferrer"; }
+      li.append(a); lista.append(li);
+    };
+    $("okTit").textContent = turno;
+    if (pago === "mp" && combo) {
+      $("okTxt").textContent = "Aboná tu combo con Mercado Pago y mandale el comprobante a Flor. Con eso tu turno queda confirmado.";
+      item("Paso 1", "Pagar " + combo.precio + " con Mercado Pago", combo.mp, true);
+      item("Paso 2", "Enviar comprobante por WhatsApp", wa(base + "\nPago: Mercado Pago. Te adjunto el comprobante."), true);
+    } else {
+      $("okTxt").textContent = "Enviá tu reserva por WhatsApp. Tu turno queda pendiente hasta que Flor lo confirme.";
+      item("Último paso", "Enviar reserva por WhatsApp", wa(base + "\nPago: " + (pago === "mp" ? "Mercado Pago (a coordinar)" : "efectivo el día del turno") + "."), true);
+    }
     $("reservaGrid").hidden = true; $("ok").hidden = false; $("ok").focus();
   });
   $("otro").addEventListener("click", e => {
-    e.preventDefault(); dia = hora = null; $("form").reset(); $("form").hidden = true; $("confirmar").disabled = false;
-    $("slots").replaceChildren(); $("horasTit").textContent = "Elegí un día";
-    $("reservaGrid").hidden = false; $("ok").hidden = true; paso(1); pintarMes();
+    e.preventDefault(); dia = hora = null; $("form").reset(); $("form").hidden = true;
+    $("slots").replaceChildren(el("p", { className: "vacio" }, "Elegí un día para ver los horarios libres.")); $("horasTit").textContent = "Horarios";
+    $("reservaGrid").hidden = false; $("ok").hidden = true; paso(1); pintarDias();
   });
-  pintarMes();
+  pintarDias();
 })();
 </script>
 </body>
