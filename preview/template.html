@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Depilación láser en Monte Caseros | Silkderma · Florencia Vich</title>
-<meta name="description" content="Depilación láser en Monte Caseros, Corrientes, con Florencia Vich. Depi Days de noviembre: reservá tu turno online y llegá al verano con la piel lista. Mujeres y hombres.">
+<meta name="description" content="Depilación láser en Monte Caseros, Corrientes, con Florencia Vich. Mirá los días disponibles de los Depi Days y reservá tu turno online. Atención personalizada para mujeres y hombres.">
 <link rel="canonical" href="https://www.silkderma.com.ar/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="es_AR">
 <meta property="og:title" content="Silkderma · Depilación láser en Monte Caseros">
-<meta property="og:description" content="Depi Days de noviembre: reservá tu turno online y empezá láser antes del verano.">
+<meta property="og:description" content="Depi Days: mirá los días disponibles y reservá tu turno de depilación láser en Monte Caseros.">
 <meta property="og:url" content="https://www.silkderma.com.ar/">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"HealthAndBeautyBusiness","name":"Silkderma · Depilación láser","description":"Depilación láser con atención personalizada para mujeres y hombres en Monte Caseros, Corrientes.","url":"https://www.silkderma.com.ar/","telephone":"+54 9 3775 44-5169","address":{"@type":"PostalAddress","addressLocality":"Monte Caseros","addressRegion":"Corrientes","addressCountry":"AR"},"areaServed":["Monte Caseros","Corrientes"],"employee":{"@type":"Person","name":"Florencia Vich","jobTitle":"Operadora láser"},"sameAs":["https://www.instagram.com/silkderma_depi.laser/"]}
@@ -124,7 +124,42 @@ header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--crema
 .res-head .gancho{font-family:var(--serif);font-style:italic;font-size:1.2rem;color:var(--salvia-osc);margin-bottom:6px}
 .res-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(24px,4vw,48px)}
 .res-grid h3{font-size:1.3rem;font-style:italic;margin-bottom:12px}
-.dias-dd{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+/* Tira de días: sirve para 2 o para 60 días */
+.res-dias{margin-bottom:28px}
+.dias-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;margin-bottom:12px}
+.dias-head h3{margin:0}
+.meses{display:flex;gap:6px;flex-wrap:wrap}
+.meses button{border:1.5px solid var(--beige);background:var(--crema);color:var(--taupe);font:600 .82rem var(--sans);padding:7px 14px;border-radius:999px;cursor:pointer;transition:background .25s,color .25s,border-color .25s}
+.meses button:hover{border-color:var(--salvia);color:var(--salvia-osc)}
+.meses button[aria-pressed="true"]{background:var(--salvia-osc);border-color:var(--salvia-osc);color:#fff}
+.tira-box{position:relative;display:flex;align-items:center;gap:8px}
+.tira{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;padding:8px 2px 12px;flex:1;min-width:0}
+.tira::-webkit-scrollbar{display:none}
+.tira > .dia-dd{flex:0 0 132px;scroll-snap-align:start}
+.tira-flecha{flex:0 0 40px;height:40px;border-radius:50%;border:1.5px solid var(--beige);background:var(--crema);color:var(--taupe-osc);font-size:1.2rem;cursor:pointer}
+.tira-flecha:hover{border-color:var(--salvia)}
+.tira-flecha:disabled{opacity:.35;cursor:default}
+.cargando{font-size:.88rem;color:var(--suave);margin-top:2px}
+.nw{white-space:nowrap}
+.dia-dd.esqueleto{height:150px;border-color:var(--arena);background:linear-gradient(110deg,var(--arena) 30%,#F3EFE7 50%,var(--arena) 70%);background-size:250% 100%;animation:brillo 1.6s ease-in-out infinite;cursor:default}
+.completos{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 20px;background:var(--rosa);border-radius:18px;padding:16px 20px;margin-bottom:14px}
+.completos p{color:var(--taupe-osc);font-size:.95rem}
+.completos b{display:block;font-family:var(--serif);font-style:italic;font-weight:500;font-size:1.2rem}
+.sin-dias{text-align:center;background:var(--salvia-clara);border-radius:22px;padding:clamp(28px,5vw,48px) 22px}
+.sin-dias h3{font-size:clamp(1.5rem,1.2rem + 1.4vw,2rem);font-style:italic;margin-bottom:8px}
+.sin-dias p{color:var(--suave);margin-bottom:20px}
+.col-datos{min-width:0}
+.datos-guia{border:1.5px dashed var(--beige);border-radius:16px;padding:22px;color:var(--suave);font-size:.95rem;text-align:center;margin-top:42px}
+.combo.esqueleto{min-height:300px;border-color:var(--arena);background:linear-gradient(110deg,var(--salvia-clara) 30%,#EEF3EA 50%,var(--salvia-clara) 70%);background-size:250% 100%;animation:brillo 1.6s ease-in-out infinite}
+@media(max-width:820px){
+  .tira{margin-inline:-4px}
+  .tira > .dia-dd{flex-basis:calc((100% - 20px) / 2.55)}
+  .meses{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;max-width:100%;padding-bottom:2px}
+  .meses::-webkit-scrollbar{display:none}
+  .meses button{flex:0 0 auto}
+  .tira-flecha{display:none}
+  .datos-guia{display:none}
+}
 /* Aurora: luz verde agua que se mueve despacio */
 @keyframes aurora{0%{background-position:0% 30%,100% 70%,0 0}50%{background-position:70% 0%,20% 100%,0 0}100%{background-position:100% 60%,0% 20%,0 0}}
 .aurora-osc{background:radial-gradient(45% 70% at 50% 50%,rgba(150,200,132,.55),transparent 70%),radial-gradient(40% 60% at 50% 50%,rgba(198,228,184,.35),transparent 70%),var(--salvia-osc);background-size:220% 220%,200% 200%,100% 100%}
@@ -132,9 +167,9 @@ header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--crema
 .dia-dd .top{display:block;position:relative;background:var(--salvia-osc);color:var(--crema);font-size:.74rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;padding:14px 8px 8px}
 .dia-dd .top::before,.dia-dd .top::after{content:"";position:absolute;top:5px;width:8px;height:8px;border-radius:50%;background:var(--crema)}
 .dia-dd .top::before{left:28%}.dia-dd .top::after{right:28%}
-.dia-dd b{display:block;font-family:var(--serif);font-weight:500;font-size:clamp(2.6rem,2rem + 2vw,3.4rem);line-height:1;margin:12px 0 2px}
+.dia-dd b{display:block;font-family:var(--serif);font-weight:500;font-size:clamp(2.2rem,1.8rem + 1.4vw,2.8rem);line-height:1;margin:12px 0 2px}
 .dia-dd .mes{display:block;font-size:.85rem;color:var(--suave)}
-.dia-dd small{display:inline-block;font-size:.74rem;color:var(--salvia-osc);margin-top:10px;background:var(--salvia-clara);border-radius:999px;padding:3px 10px}
+.dia-dd small{display:inline-block;white-space:nowrap;font-size:.74rem;color:var(--salvia-osc);margin-top:10px;background:var(--salvia-clara);border-radius:999px;padding:3px 10px}
 .dia-dd:not(:disabled):hover{border-color:var(--salvia);transform:translateY(-3px) rotate(-1deg);background:radial-gradient(45% 70% at 50% 50%,rgba(170,212,152,.45),transparent 70%),radial-gradient(40% 60% at 50% 50%,rgba(214,236,204,.6),transparent 70%),var(--crema);background-size:220% 220%,200% 200%,100% 100%;animation:aurora 7s ease-in-out infinite alternate}
 .dia-dd[aria-pressed="true"],.dia-dd[aria-pressed="true"]:hover{background:radial-gradient(45% 70% at 50% 50%,rgba(150,200,132,.55),transparent 70%),radial-gradient(40% 60% at 50% 50%,rgba(198,228,184,.35),transparent 70%),var(--salvia-osc);background-size:220% 220%,200% 200%,100% 100%;border-color:var(--salvia-osc);color:#fff;animation:aurora 8s ease-in-out infinite alternate;transform:translateY(-3px)}
 .dia-dd[aria-pressed="true"] .top{background:#3B5237}
@@ -148,6 +183,7 @@ header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--crema
 .slots{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:8px}
 .slots .chip{text-align:center;padding:9px 0;font-size:.9rem}
 .vacio{color:var(--suave);font-size:.95rem}
+.slots .vacio{grid-column:1/-1}
 .datos-form{margin-top:26px;display:grid;gap:12px}
 .datos-form label{display:grid;gap:6px;font-size:.88rem;font-weight:600;color:var(--taupe-osc)}
 .datos-form input:not([type=checkbox]):not([type=radio]),.datos-form select{font:400 1rem var(--sans);padding:12px 14px;border-radius:12px;border:1.5px solid var(--beige);background:var(--crema);color:var(--texto);width:100%}
@@ -292,7 +328,7 @@ details p{padding-bottom:20px;color:var(--suave)}
 
 /* CTA final */
 .final-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(32px,5vw,72px);align-items:center;text-align:left}
-.final h2{max-width:14ch;margin:14px 0 18px;font-size:clamp(2.2rem,1.5rem + 2.8vw,3.6rem)}
+.final h2{max-width:20ch;text-wrap:balance;margin:14px 0 18px;font-size:clamp(2.2rem,1.5rem + 2.8vw,3.6rem)}
 .final-foto{width:min(420px,100%);justify-self:center;border-radius:220px 220px var(--r) var(--r);aspect-ratio:4/5;object-fit:cover;box-shadow:0 24px 60px rgba(63,56,47,.14)}
 @media(max-width:820px){.final-grid{grid-template-columns:1fr;text-align:center}.final h2{margin-inline:auto}.final-foto{width:min(80vw,320px)}}
 .final p{color:var(--suave);margin-bottom:28px}
@@ -408,15 +444,15 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
     <div class="res-box">
       <div class="res-head">
         <div>
-          <span class="eyebrow">Noviembre · Monte Caseros</span>
+          <span class="eyebrow" id="ddEyebrow">Monte Caseros</span>
           <h2 style="margin-top:12px"><span class="dd"><span aria-hidden="true">✨</span> Depi Days <span aria-hidden="true">✨</span></span></h2>
         </div>
         <div>
-          <p class="gancho">¿Ya pensaste en empezar láser antes del verano?</p>
-          <p>Solo 4 días de turnos en noviembre. Elegí el tuyo y llegá al verano con la piel lista.</p>
+          <p class="gancho">¿Ya pensaste en empezar láser?</p>
+          <p id="ddTexto">Elegí tu día y empezá tu tratamiento.</p>
         </div>
       </div>
-      <div class="como">
+      <div class="como" id="como">
         <b>Te cuento cómo es</b>
         <ol>
           <li id="p1" class="on">Elegí el día</li>
@@ -426,14 +462,36 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
         <small>Después te confirmo el turno por WhatsApp.</small>
       </div>
 
-      <div class="res-grid" id="reservaGrid">
-        <div>
+      <div class="sin-dias" id="sinDias" hidden>
+        <h3>Por ahora no hay Depi Days abiertos</h3>
+        <p>Escribime y te aviso apenas abra nuevos días.</p>
+        <a class="btn" href="#" data-wa="Hola Flor! Quiero que me avises cuando abras nuevos Depi Days." target="_blank" rel="noopener noreferrer">Avisame por WhatsApp</a>
+      </div>
+
+      <div class="res-dias" id="resDias">
+        <div class="dias-head">
           <h3>Elegí tu Depi Day</h3>
-          <div class="dias-dd" id="dias" role="group" aria-label="Días de turnos"></div>
+          <div class="meses" id="meses" role="group" aria-label="Ir al mes" hidden></div>
         </div>
+        <div class="completos" id="completos" hidden>
+          <p><b>Todos los turnos están tomados</b>Si se libera uno, te aviso. Escribime y te anoto.</p>
+          <a class="btn" href="#" data-wa="Hola Flor! Vi que los Depi Days están completos. ¿Me avisás si se libera un turno?" target="_blank" rel="noopener noreferrer">Anotarme por WhatsApp</a>
+        </div>
+        <div class="tira-box">
+          <button type="button" class="tira-flecha" id="tPrev" aria-label="Días anteriores" hidden>‹</button>
+          <div class="tira" id="dias" role="group" aria-label="Días de turnos" aria-busy="true"></div>
+          <button type="button" class="tira-flecha" id="tNext" aria-label="Más días" hidden>›</button>
+        </div>
+        <p class="cargando" id="cargando" role="status">Cargando turnos…</p>
+      </div>
+
+      <div class="res-grid" id="reservaGrid">
         <div>
           <h3 id="horasTit">Horarios</h3>
           <div class="slots" id="slots"><p class="vacio">Elegí un día para ver los horarios libres.</p></div>
+        </div>
+        <div class="col-datos">
+          <p class="datos-guia" id="datosGuia">Elegí un horario y completá tus datos.</p>
           <form class="datos-form" id="form" name="turno" method="POST" hidden novalidate>
             <h3 style="margin:0">Tus datos</h3>
             <label>Combo<select name="combo" id="comboSel" required></select></label>
@@ -539,7 +597,7 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
     <div class="final-grid">
       <div>
         <span class="eyebrow">Podés empezar aunque tengas mil dudas</span>
-        <h2>Llegá al verano con la piel lista</h2>
+        <h2>Tu tratamiento láser empieza acá</h2>
         <p>Elegí tu horario y lo vemos con calma.</p>
         <a class="btn" href="#turno">Reservá tu turno</a>
       </div>
@@ -596,7 +654,7 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
   // Agenda en NEO Gestión: Flor la edita desde la app. Si NEO no responde, quedan los datos de abajo.
   const NEO_URL = "https://neo-gestion.vercel.app/api/publico/turnos/silkderma";
   let WHATSAPP = "5493775445169";
-  // Depi Days de noviembre: 9:00 a 20:30, turnos cada 40 minutos.
+  // Respaldo: solo se usa si NEO no responde. Grilla general de 9:00 a 20:30, cada 40 min.
   let DEPIDAYS = ["2026-11-05", "2026-11-06", "2026-11-08", "2026-11-09"];
   const INICIO = 9 * 60, FIN = 20 * 60 + 30, DURACION = 40;
   // Turnos ya tomados (los marca Flor). Ej.: "2026-11-05": ["09:00", "10:20"]
@@ -681,27 +739,80 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
     if (previo) $("comboSel").value = previo.id;
     pintarCombos(previo ? previo.genero : generos[0]); pintarInfo();
   };
-  iniciarCombos();
-
   $("comboSel").addEventListener("change", () => { guardar($("comboSel").value); pintarInfo(); });
 
   /* ===== Calendario Depi Days ===== */
   let dia = null, hora = null;
   const paso = n => ["p1", "p2", "p3"].forEach((p, i) => $(p).classList.toggle("on", i < n));
+  const tira = $("dias");
+  // Solo se muestran los días que todavía no pasaron (NEO ya los manda así; el respaldo puede quedar viejo).
+  const abiertos = () => DEPIDAYS.filter(d => fecha(d) >= hoy);
+  const capital = t => t.charAt(0).toUpperCase() + t.slice(1);
+  const nombreMes = clave => fmtMes.format(fecha(clave + "-01"));
+  const unirMeses = m => m.length === 1 ? m[0] : m.length === 2 ? m[0] + " y " + m[1] : m[0] + " a " + m[m.length - 1];
+  const diaLargo = d => { const f = fecha(d); return fmtDiaSem.format(f) + " " + f.getDate() + " de " + fmtMes.format(f); };
+
+  /* Textos del encabezado según los días abiertos */
+  const pintarTextos = () => {
+    const ds = abiertos(), n = ds.length, m = [...new Set(ds.map(d => nombreMes(d.slice(0, 7))))];
+    $("ddEyebrow").replaceChildren(...(n ? [capital(unirMeses(m)) + " · "] : []), el("span", { className: "nw" }, "Monte Caseros"));
+    const t = $("ddTexto"); t.hidden = !n;
+    if (n === 1) t.textContent = "Un solo día de turnos: el " + diaLargo(ds[0]) + ". Reservá el tuyo y empezá tu tratamiento.";
+    else if (n <= 7 && m.length <= 2) t.textContent = "Solo " + n + " días de turnos en " + unirMeses(m) + ". Elegí el tuyo y empezá tu tratamiento.";
+    else if (m.length === 1) t.textContent = "Turnos abiertos durante " + m[0] + ". Elegí tu día y empezá tu tratamiento.";
+    else if (n) t.textContent = "Turnos abiertos de " + m[0] + " a " + m[m.length - 1] + ". Elegí tu día y empezá tu tratamiento.";
+  };
+
+  /* Tira de días con chips de mes */
+  const posDe = card => card.offsetLeft - tira.offsetLeft - 2;
+  const irA = (card, suave = true) => { if (card) tira.scrollTo({ left: posDe(card), behavior: suave ? "smooth" : "instant" }); };
+  const marcarNav = () => {
+    const cards = [...tira.querySelectorAll(".dia-dd[data-fecha]")];
+    const primera = cards.find(c => posDe(c) >= tira.scrollLeft - 8) || cards[0];
+    if (primera) $("meses").querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.mes === primera.dataset.mes)));
+    const desborda = tira.scrollWidth > tira.clientWidth + 4;
+    $("tPrev").hidden = $("tNext").hidden = !desborda;
+    $("tPrev").disabled = tira.scrollLeft <= 4;
+    $("tNext").disabled = tira.scrollLeft + tira.clientWidth >= tira.scrollWidth - 4;
+  };
+  let raf = 0;
+  tira.addEventListener("scroll", () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(marcarNav); }, { passive: true });
+  addEventListener("resize", marcarNav);
+  $("tPrev").addEventListener("click", () => tira.scrollBy({ left: -tira.clientWidth * 0.8, behavior: "smooth" }));
+  $("tNext").addEventListener("click", () => tira.scrollBy({ left: tira.clientWidth * 0.8, behavior: "smooth" }));
+
   const pintarDias = () => {
-    const cont = $("dias"); cont.replaceChildren();
-    DEPIDAYS.forEach(d => {
-      const f = fecha(d), n = libres(d).length, pasado = f < hoy;
-      const b = el("button", { type: "button", className: "dia-dd", disabled: pasado || n === 0 });
+    const ds = abiertos(), vacio = !ds.length;
+    tira.replaceChildren(); tira.setAttribute("aria-busy", "false"); $("cargando").hidden = true;
+    $("sinDias").hidden = !vacio; $("resDias").hidden = vacio; $("como").hidden = vacio;
+    document.querySelector(".demo").hidden = vacio;
+    if (vacio) { $("reservaGrid").hidden = true; return; }
+    if ($("ok").hidden) $("reservaGrid").hidden = false;
+    $("completos").hidden = ds.some(d => libres(d).length > 0);
+    ds.forEach(d => {
+      const f = fecha(d), n = libres(d).length;
+      const b = el("button", { type: "button", className: "dia-dd", disabled: n === 0 });
+      b.dataset.fecha = d; b.dataset.mes = d.slice(0, 7);
       b.append(el("span", { className: "top" }, fmtDiaSem.format(f)), el("b", {}, String(f.getDate())), el("span", { className: "mes" }, fmtMes.format(f)),
-        el("small", {}, pasado ? "Finalizado" : n ? n + " turnos libres" : "Completo"));
+        el("small", {}, n ? n + (n === 1 ? " turno libre" : " turnos libres") : "Completo"));
       b.setAttribute("aria-pressed", String(d === dia));
       b.addEventListener("click", () => elegirDia(d));
-      cont.append(b);
+      tira.append(b);
     });
+    const meses = [...new Set(ds.map(d => d.slice(0, 7)))], mc = $("meses");
+    mc.replaceChildren(); mc.hidden = meses.length < 2;
+    meses.forEach(k => {
+      const b = el("button", { type: "button" }, capital(nombreMes(k))); b.dataset.mes = k;
+      b.addEventListener("click", () => irA(tira.querySelector('.dia-dd[data-mes="' + k + '"]')));
+      mc.append(b);
+    });
+    // Arranca en el día elegido o en el primero con turnos libres.
+    irA(tira.querySelector('.dia-dd[aria-pressed="true"]') || tira.querySelector(".dia-dd:not(:disabled)"), false);
+    marcarNav();
   };
   const elegirDia = d => {
-    dia = d; hora = null; $("form").hidden = true; paso(2); pintarDias();
+    dia = d; hora = null; $("form").hidden = true; $("datosGuia").hidden = false; paso(2);
+    tira.querySelectorAll(".dia-dd").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.fecha === d)));
     $("horasTit").textContent = fmtLargo.format(fecha(d));
     const s = $("slots"); s.replaceChildren();
     horariosDe(d).forEach(h => {
@@ -709,7 +820,7 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
       b.setAttribute("aria-pressed", "false");
       b.addEventListener("click", () => {
         s.querySelectorAll(".chip").forEach(x => x.setAttribute("aria-pressed", "false"));
-        b.setAttribute("aria-pressed", "true"); hora = h; $("form").hidden = false; paso(3);
+        b.setAttribute("aria-pressed", "true"); hora = h; $("form").hidden = false; $("datosGuia").hidden = true; paso(3);
       });
       s.append(b);
     });
@@ -747,11 +858,15 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
     $("reservaGrid").hidden = true; $("ok").hidden = false; $("ok").focus();
   });
   $("otro").addEventListener("click", e => {
-    e.preventDefault(); dia = hora = null; const cs = $("comboSel").value; $("form").reset(); $("comboSel").value = cs; pintarInfo(); $("form").hidden = true;
+    e.preventDefault(); dia = hora = null; const cs = $("comboSel").value; $("form").reset(); $("comboSel").value = cs; pintarInfo(); $("form").hidden = true; $("datosGuia").hidden = false;
     $("slots").replaceChildren(el("p", { className: "vacio" }, "Elegí un día para ver los horarios libres.")); $("horasTit").textContent = "Horarios";
     $("reservaGrid").hidden = false; $("ok").hidden = true; paso(1); pintarDias();
   });
-  pintarDias();
+  /* ===== Mientras carga: tarjetas vacías con brillo, sin mostrar datos que puedan cambiar ===== */
+  const esqueleto = (cont, clase, n) => { for (let i = 0; i < n; i++) { const x = el("div", { className: clase + " esqueleto" }); x.setAttribute("aria-hidden", "true"); cont.append(x); } };
+  esqueleto(tira, "dia-dd", 4);
+  esqueleto($("combosGrid"), "combo", 4);
+  document.querySelector(".genero").hidden = true;
 
   /* ===== Datos en vivo desde NEO Gestión ===== */
   const pesos = n => "$" + Math.round(Number(n)).toLocaleString("es-AR");
@@ -764,10 +879,14 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
     && d.dias.every(x => x && esFecha(x.fecha) && esHoras(x.horarios) && esHoras(x.ocupados))
     && d.servicios.every(s => s && typeof s.nombre === "string" && esTexto(s.categoria) && (s.zonas == null || (Array.isArray(s.zonas) && s.zonas.every(z => typeof z === "string"))) && (s.precio == null || Number.isFinite(Number(s.precio))))
     && (d.whatsapp == null || /^\d{8,15}$/.test(d.whatsapp));
+  // Pinta una sola vez: con lo de NEO, o con el respaldo si NEO falla o tarda más de 5 segundos.
+  let resuelto = false;
   const corte = "AbortController" in window ? new AbortController() : null;
-  if (corte) setTimeout(() => corte.abort(), 8000);
+  const listo = () => { if (resuelto) return; resuelto = true; clearTimeout(espera); iniciarCombos(); pintarDias(); pintarTextos(); };
+  const espera = setTimeout(() => { if (corte) corte.abort(); listo(); }, 5000);
   fetch(NEO_URL, { cache: "no-store", signal: corte ? corte.signal : undefined }).then(r => r.ok ? r.json() : null).then(d => {
-    if (!valido(d)) return;
+    if (resuelto) return;
+    if (!valido(d)) { listo(); return; }
     if (d.whatsapp) { WHATSAPP = d.whatsapp; document.querySelectorAll("[data-wa]").forEach(a => { a.href = wa(a.dataset.wa); }); }
     DEPIDAYS = d.dias.map(x => x.fecha);
     HORARIOS_DIA = {}; RESERVADOS = {};
@@ -776,11 +895,9 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
       PARA = {};
       d.servicios.forEach(s => { PARA[clave(s.categoria)] = s.categoria || "Servicios"; });
       COMBOS = d.servicios.map(s => ({ id: String(s.id), genero: clave(s.categoria), nombre: s.nombre, zonas: s.zonas || [], precio: s.precio != null ? pesos(s.precio) : "Consultar" }));
-      iniciarCombos();
     }
-    if (dia && !DEPIDAYS.includes(dia)) dia = null;
-    if (dia && $("ok").hidden) elegirDia(dia); else pintarDias();
-  }).catch(() => {});
+    listo();
+  }).catch(listo);
 
 
   /* ===== Proceso: la línea se completa de punto en punto 1 → 3 → 6 → 12 ===== */
