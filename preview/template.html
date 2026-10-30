@@ -593,25 +593,27 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
 "use strict";
 (() => {
   /* ===== Datos editables ===== */
-  const WHATSAPP = "5493775445169";
+  // Agenda en NEO Gestión: Flor la edita desde la app. Si NEO no responde, quedan los datos de abajo.
+  const NEO_URL = "https://neo-gestion.vercel.app/api/publico/turnos/silkderma";
+  let WHATSAPP = "5493775445169";
   // Depi Days de noviembre: 9:00 a 20:30, turnos cada 40 minutos.
-  const DEPIDAYS = ["2026-11-05", "2026-11-06", "2026-11-08", "2026-11-09"];
+  let DEPIDAYS = ["2026-11-05", "2026-11-06", "2026-11-08", "2026-11-09"];
   const INICIO = 9 * 60, FIN = 20 * 60 + 30, DURACION = 40;
   // Turnos ya tomados (los marca Flor). Ej.: "2026-11-05": ["09:00", "10:20"]
-  const RESERVADOS = {
+  let RESERVADOS = {
     "2026-11-05": ["09:00", "09:40", "10:20", "11:00", "11:40", "12:20", "15:00", "15:30", "16:00", "16:30", "17:00", "17:40", "18:00", "18:30", "19:00", "19:40", "20:30"],
     "2026-11-06": ["09:00", "09:40", "10:20", "11:00", "11:40", "15:40", "16:20", "17:40", "18:20", "20:20"],
     "2026-11-08": ["09:40", "10:20", "11:00", "11:40", "12:20", "14:20", "15:00", "15:40", "16:20", "17:00", "17:40", "18:20", "19:00", "19:40", "20:00"],
     "2026-11-09": ["09:00", "09:40", "10:20", "11:00", "11:40", "13:40", "14:20", "15:00", "15:40", "16:20", "17:40", "18:20", "19:00", "19:40", "20:20"]
   };
   // Horarios propios de un día (si no hay, se usa la grilla general). Jueves 5: ajustes de Flor.
-  const HORARIOS_DIA = {
+  let HORARIOS_DIA = {
     "2026-11-05": ["09:00", "09:40", "10:20", "11:00", "11:40", "12:20", "13:00", "13:30", "14:30", "15:00", "15:30", "16:00", "16:30", "17:00", "17:40", "18:00", "18:30", "19:00", "19:40", "20:30"],
     "2026-11-08": ["09:00", "09:40", "10:20", "11:00", "11:40", "12:20", "13:00", "13:40", "14:20", "15:00", "15:40", "16:20", "17:00", "17:40", "18:20", "19:00", "19:40", "20:00"],
     "2026-11-06": ["09:00", "09:40", "10:20", "11:00", "11:40", "12:20", "13:00", "13:30", "14:00", "14:30", "15:00", "15:30", "15:40", "16:20", "17:00", "17:40", "18:20", "19:00", "19:40", "20:20"]
   };
   // Combos por género: zonas y precio (lista de precios de Flor).
-  const COMBOS = [
+  let COMBOS = [
     { id: "m1", genero: "mujer", nombre: "Combo 1", zonas: ["Axilas", "Cavado completo", "Línea interglútea"], precio: "$23.000" },
     { id: "m2", genero: "mujer", nombre: "Combo 2", zonas: ["Axilas", "Cavado completo", "Línea interglútea", "Media pierna"], precio: "$29.000" },
     { id: "m3", genero: "mujer", nombre: "Combo 3", zonas: ["Axilas", "Cavado completo", "Línea interglútea", "Piernas completas"], precio: "$35.000" },
@@ -621,7 +623,7 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
     { id: "h3", genero: "hombre", nombre: "Combo 3", zonas: ["Pecho", "Abdomen", "Espalda completa", "Piernas completas"], precio: "$35.000" },
     { id: "h4", genero: "hombre", nombre: "Combo 4", zonas: ["Axilas", "Pecho", "Abdomen", "Espalda completa", "Piernas completas"], precio: "$40.000" }
   ];
-  const PARA = { mujer: "Mujeres", hombre: "Hombres" };
+  let PARA = { mujer: "Mujeres", hombre: "Hombres" };
 
   /* ===== Utilidades ===== */
   const $ = id => document.getElementById(id);
@@ -630,6 +632,7 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
   const fecha = s => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
   const fmtLargo = new Intl.DateTimeFormat("es-AR", { weekday: "long", day: "numeric", month: "long" });
   const fmtDiaSem = new Intl.DateTimeFormat("es-AR", { weekday: "long" });
+  const fmtMes = new Intl.DateTimeFormat("es-AR", { month: "long" });
   const hhmm = m => String(Math.floor(m / 60)).padStart(2, "0") + ":" + String(m % 60).padStart(2, "0");
   const HORARIOS = []; for (let m = INICIO; m <= FIN; m += DURACION) HORARIOS.push(hhmm(m));
   const hoy = new Date(); hoy.setHours(0, 0, 0, 0);
@@ -662,17 +665,25 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
       card.append(b); grid.append(card);
     });
   };
-  document.querySelectorAll(".genero button").forEach(b => b.addEventListener("click", () => pintarCombos(b.dataset.genero)));
-  ["mujer", "hombre"].forEach(g => {
-    const og = el("optgroup", { label: PARA[g] });
-    COMBOS.filter(c => c.genero === g).forEach(c => og.append(el("option", { value: c.id }, c.nombre + " " + PARA[g] + " · " + c.precio)));
-    $("comboSel").append(og);
-  });
-  $("comboSel").append(el("option", { value: "consulta" }, "Todavía no sé, quiero consultar"));
+  const iniciarCombos = () => {
+    const generos = Object.keys(PARA);
+    const gb = document.querySelector(".genero"); gb.replaceChildren();
+    generos.forEach(g => { const b = el("button", { type: "button" }, PARA[g]); b.dataset.genero = g; b.addEventListener("click", () => pintarCombos(g)); gb.append(b); });
+    gb.hidden = generos.length < 2;
+    $("comboSel").replaceChildren();
+    generos.forEach(g => {
+      const og = el("optgroup", { label: PARA[g] });
+      COMBOS.filter(c => c.genero === g).forEach(c => og.append(el("option", { value: c.id }, c.nombre + " " + PARA[g] + " · " + c.precio)));
+      $("comboSel").append(og);
+    });
+    $("comboSel").append(el("option", { value: "consulta" }, "Todavía no sé, quiero consultar"));
+    const previo = COMBOS.find(c => c.id === leer());
+    if (previo) $("comboSel").value = previo.id;
+    pintarCombos(previo ? previo.genero : generos[0]); pintarInfo();
+  };
+  iniciarCombos();
+
   $("comboSel").addEventListener("change", () => { guardar($("comboSel").value); pintarInfo(); });
-  const previo = COMBOS.find(c => c.id === leer());
-  if (previo) $("comboSel").value = previo.id;
-  pintarCombos(previo ? previo.genero : "mujer"); pintarInfo();
 
   /* ===== Calendario Depi Days ===== */
   let dia = null, hora = null;
@@ -682,7 +693,7 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
     DEPIDAYS.forEach(d => {
       const f = fecha(d), n = libres(d).length, pasado = f < hoy;
       const b = el("button", { type: "button", className: "dia-dd", disabled: pasado || n === 0 });
-      b.append(el("span", { className: "top" }, fmtDiaSem.format(f)), el("b", {}, String(f.getDate())), el("span", { className: "mes" }, "noviembre"),
+      b.append(el("span", { className: "top" }, fmtDiaSem.format(f)), el("b", {}, String(f.getDate())), el("span", { className: "mes" }, fmtMes.format(f)),
         el("small", {}, pasado ? "Finalizado" : n ? n + " turnos libres" : "Completo"));
       b.setAttribute("aria-pressed", String(d === dia));
       b.addEventListener("click", () => elegirDia(d));
@@ -741,6 +752,25 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
     $("reservaGrid").hidden = false; $("ok").hidden = true; paso(1); pintarDias();
   });
   pintarDias();
+
+  /* ===== Datos en vivo desde NEO Gestión ===== */
+  const pesos = n => "$" + Math.round(Number(n)).toLocaleString("es-AR");
+  const clave = t => (t || "Servicios").toLowerCase().normalize("NFD").replace(/[^a-z0-9]+/g, "-");
+  fetch(NEO_URL, { cache: "no-store" }).then(r => r.ok ? r.json() : null).then(d => {
+    if (!d || !Array.isArray(d.dias) || !Array.isArray(d.servicios)) return;
+    if (d.whatsapp) { WHATSAPP = d.whatsapp; document.querySelectorAll("[data-wa]").forEach(a => { a.href = wa(a.dataset.wa); }); }
+    DEPIDAYS = d.dias.map(x => x.fecha);
+    HORARIOS_DIA = {}; RESERVADOS = {};
+    d.dias.forEach(x => { HORARIOS_DIA[x.fecha] = x.horarios; RESERVADOS[x.fecha] = x.ocupados; });
+    if (d.servicios.length) {
+      PARA = {};
+      d.servicios.forEach(s => { PARA[clave(s.categoria)] = s.categoria || "Servicios"; });
+      COMBOS = d.servicios.map(s => ({ id: s.id, genero: clave(s.categoria), nombre: s.nombre, zonas: s.zonas || [], precio: s.precio != null ? pesos(s.precio) : "Consultar" }));
+      iniciarCombos();
+    }
+    if (dia && !DEPIDAYS.includes(dia)) dia = null;
+    if (dia && $("ok").hidden) elegirDia(dia); else pintarDias();
+  }).catch(() => {});
 
 
   /* ===== Proceso: la línea se completa de punto en punto 1 → 3 → 6 → 12 ===== */
