@@ -756,8 +756,18 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
   /* ===== Datos en vivo desde NEO Gestión ===== */
   const pesos = n => "$" + Math.round(Number(n)).toLocaleString("es-AR");
   const clave = t => (t || "Servicios").toLowerCase().normalize("NFD").replace(/[^a-z0-9]+/g, "-");
-  fetch(NEO_URL, { cache: "no-store" }).then(r => r.ok ? r.json() : null).then(d => {
-    if (!d || !Array.isArray(d.dias) || !Array.isArray(d.servicios)) return;
+  // Solo se usan datos con la forma esperada; si algo no cuadra, queda lo de arriba.
+  const esFecha = x => typeof x === "string" && /^\d{4}-\d{2}-\d{2}$/.test(x);
+  const esHoras = x => Array.isArray(x) && x.every(h => typeof h === "string" && /^\d{2}:\d{2}$/.test(h));
+  const esTexto = x => x == null || typeof x === "string";
+  const valido = d => d && Array.isArray(d.dias) && Array.isArray(d.servicios)
+    && d.dias.every(x => x && esFecha(x.fecha) && esHoras(x.horarios) && esHoras(x.ocupados))
+    && d.servicios.every(s => s && typeof s.nombre === "string" && esTexto(s.categoria) && (s.zonas == null || (Array.isArray(s.zonas) && s.zonas.every(z => typeof z === "string"))) && (s.precio == null || Number.isFinite(Number(s.precio))))
+    && (d.whatsapp == null || /^\d{8,15}$/.test(d.whatsapp));
+  const corte = "AbortController" in window ? new AbortController() : null;
+  if (corte) setTimeout(() => corte.abort(), 8000);
+  fetch(NEO_URL, { cache: "no-store", signal: corte ? corte.signal : undefined }).then(r => r.ok ? r.json() : null).then(d => {
+    if (!valido(d)) return;
     if (d.whatsapp) { WHATSAPP = d.whatsapp; document.querySelectorAll("[data-wa]").forEach(a => { a.href = wa(a.dataset.wa); }); }
     DEPIDAYS = d.dias.map(x => x.fecha);
     HORARIOS_DIA = {}; RESERVADOS = {};
@@ -765,7 +775,7 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
     if (d.servicios.length) {
       PARA = {};
       d.servicios.forEach(s => { PARA[clave(s.categoria)] = s.categoria || "Servicios"; });
-      COMBOS = d.servicios.map(s => ({ id: s.id, genero: clave(s.categoria), nombre: s.nombre, zonas: s.zonas || [], precio: s.precio != null ? pesos(s.precio) : "Consultar" }));
+      COMBOS = d.servicios.map(s => ({ id: String(s.id), genero: clave(s.categoria), nombre: s.nombre, zonas: s.zonas || [], precio: s.precio != null ? pesos(s.precio) : "Consultar" }));
       iniciarCombos();
     }
     if (dia && !DEPIDAYS.includes(dia)) dia = null;
