@@ -63,7 +63,7 @@ header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--crema
 @media(max-width:820px){.nav ul{display:none}}
 
 /* Hero */
-.hero{padding:clamp(40px,6vw,80px) 0 clamp(64px,8vw,100px);background:radial-gradient(120% 80% at 80% 20%,var(--salvia-clara),transparent 60%),var(--crema)}
+.hero{overflow-x:clip;padding:clamp(40px,6vw,80px) 0 clamp(64px,8vw,100px);background:radial-gradient(120% 80% at 80% 20%,var(--salvia-clara),transparent 60%),var(--crema)}
 .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(32px,5vw,72px);align-items:center}
 .hero h1{font-size:clamp(2.6rem,1.6rem + 4.4vw,4.8rem);margin:18px 0 20px;letter-spacing:-.01em}
 .hero h1 em{color:var(--salvia-osc)}
@@ -128,14 +128,16 @@ header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--crema
 .res-dias{margin-bottom:28px}
 .dias-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;margin-bottom:12px}
 .dias-head h3{margin:0}
-.meses{display:flex;gap:6px;flex-wrap:wrap}
+.chips-dias{display:grid;gap:6px;justify-items:end;min-width:0;max-width:100%}
+.meses{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+.semanas button{font-size:.76rem;padding:5px 12px;font-weight:500}
 .meses button{border:1.5px solid var(--beige);background:var(--crema);color:var(--taupe);font:600 .82rem var(--sans);padding:7px 14px;border-radius:999px;cursor:pointer;transition:background .25s,color .25s,border-color .25s}
 .meses button:hover{border-color:var(--salvia);color:var(--salvia-osc)}
 .meses button[aria-pressed="true"]{background:var(--salvia-osc);border-color:var(--salvia-osc);color:#fff}
 .tira-box{position:relative;display:flex;align-items:center;gap:8px}
 .tira{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;scrollbar-width:none;padding:8px 2px 12px;flex:1;min-width:0}
 .tira::-webkit-scrollbar{display:none}
-.tira > .dia-dd{flex:0 0 132px;scroll-snap-align:start}
+.tira > .dia-dd{flex:0 0 calc((100% - 60px) / 7);min-width:112px;scroll-snap-align:start}
 .tira-flecha{flex:0 0 40px;height:40px;border-radius:50%;border:1.5px solid var(--beige);background:var(--crema);color:var(--taupe-osc);font-size:1.2rem;cursor:pointer}
 .tira-flecha:hover{border-color:var(--salvia)}
 .tira-flecha:disabled{opacity:.35;cursor:default}
@@ -154,7 +156,8 @@ header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--crema
 @media(max-width:820px){
   .tira{margin-inline:-4px}
   .tira > .dia-dd{flex-basis:calc((100% - 20px) / 2.55)}
-  .meses{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;max-width:100%;padding-bottom:2px}
+  .chips-dias{justify-items:start;width:100%}
+  .meses{justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;max-width:100%;padding-bottom:2px}
   .meses::-webkit-scrollbar{display:none}
   .meses button{flex:0 0 auto}
   .tira-flecha{display:none}
@@ -471,7 +474,10 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
       <div class="res-dias" id="resDias">
         <div class="dias-head">
           <h3>Elegí tu Depi Day</h3>
-          <div class="meses" id="meses" role="group" aria-label="Ir al mes" hidden></div>
+          <div class="chips-dias">
+            <div class="meses" id="meses" role="group" aria-label="Ir al mes" hidden></div>
+            <div class="meses semanas" id="semanas" role="group" aria-label="Ir a la semana" hidden></div>
+          </div>
         </div>
         <div class="completos" id="completos" hidden>
           <p><b>Todos los turnos están tomados</b>Si se libera uno, te aviso. Escribime y te anoto.</p>
@@ -745,31 +751,59 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
   let dia = null, hora = null;
   const paso = n => ["p1", "p2", "p3"].forEach((p, i) => $(p).classList.toggle("on", i < n));
   const tira = $("dias");
-  // Solo se muestran los días que todavía no pasaron (NEO ya los manda así; el respaldo puede quedar viejo).
-  const abiertos = () => DEPIDAYS.filter(d => fecha(d) >= hoy);
+  /* ===== Reglas del turnero para cualquier cantidad de días =====
+     - Se muestran solo los días que no pasaron y que tienen al menos un horario (sin inventar ni rellenar).
+     - Tira horizontal: en celular se ven 2 días y medio; en compu, 7 (una semana) y las flechas avanzan de a una pantalla.
+     - Chips de mes: aparecen si los días abiertos son de 2 meses o más. Si un nombre de mes se repite (más de un año), suma el año.
+     - Chips de semana: aparecen para el mes que se está viendo si ese mes tiene más de 10 días abiertos (1–7, 8–14, 15–21, 22–fin).
+     - Encabezado: 1 día / hasta 7 días / un mes / varios meses (ver pintarTextos). "Depi Days" no cambia.
+     - Sin días: tarjeta "Por ahora no hay Depi Days abiertos". Todos completos: aviso para anotarse. */
+  const abiertos = () => DEPIDAYS.filter(d => fecha(d) >= hoy && horariosDe(d).length);
   const capital = t => t.charAt(0).toUpperCase() + t.slice(1);
   const nombreMes = clave => fmtMes.format(fecha(clave + "-01"));
-  const unirMeses = m => m.length === 1 ? m[0] : m.length === 2 ? m[0] + " y " + m[1] : m[0] + " a " + m[m.length - 1];
+  const mesesDe = ds => [...new Set(ds.map(d => d.slice(0, 7)))];
+  // Nombre del mes para mostrar; suma el año si en la lista se repite el nombre (agenda de más de un año).
+  const etiquetaMes = (k, todos) => todos.filter(x => nombreMes(x) === nombreMes(k)).length > 1 ? nombreMes(k) + " " + k.slice(0, 4) : nombreMes(k);
+  const unirMeses = ks => { const m = ks.map(k => etiquetaMes(k, ks)); return m.length === 1 ? m[0] : m.length === 2 ? m[0] + " y " + m[1] : m[0] + " a " + m[m.length - 1]; };
   const diaLargo = d => { const f = fecha(d); return fmtDiaSem.format(f) + " " + f.getDate() + " de " + fmtMes.format(f); };
 
   /* Textos del encabezado según los días abiertos */
   const pintarTextos = () => {
-    const ds = abiertos(), n = ds.length, m = [...new Set(ds.map(d => nombreMes(d.slice(0, 7))))];
-    $("ddEyebrow").replaceChildren(...(n ? [capital(unirMeses(m)) + " · "] : []), el("span", { className: "nw" }, "Monte Caseros"));
+    const ds = abiertos(), n = ds.length, ks = mesesDe(ds), m = ks.map(k => etiquetaMes(k, ks));
+    $("ddEyebrow").replaceChildren(...(n ? [capital(unirMeses(ks)) + " · "] : []), el("span", { className: "nw" }, "Monte Caseros"));
     const t = $("ddTexto"); t.hidden = !n;
+    if (!n) { t.textContent = ""; return; }
     if (n === 1) t.textContent = "Un solo día de turnos: el " + diaLargo(ds[0]) + ". Reservá el tuyo y empezá tu tratamiento.";
-    else if (n <= 7 && m.length <= 2) t.textContent = "Solo " + n + " días de turnos en " + unirMeses(m) + ". Elegí el tuyo y empezá tu tratamiento.";
+    else if (n <= 7 && m.length <= 2) t.textContent = "Solo " + n + " días de turnos en " + unirMeses(ks) + ". Elegí el tuyo y empezá tu tratamiento.";
     else if (m.length === 1) t.textContent = "Turnos abiertos durante " + m[0] + ". Elegí tu día y empezá tu tratamiento.";
     else if (n) t.textContent = "Turnos abiertos de " + m[0] + " a " + m[m.length - 1] + ". Elegí tu día y empezá tu tratamiento.";
   };
 
-  /* Tira de días con chips de mes */
+  /* Tira de días con chips de mes y de semana */
+  const SEMANAS = [[1, 7], [8, 14], [15, 21], [22, 31]];
+  const semanaDe = d => d.slice(0, 7) + "-s" + SEMANAS.findIndex(([a, b]) => +d.slice(8) >= a && +d.slice(8) <= b);
   const posDe = card => card.offsetLeft - tira.offsetLeft - 2;
   const irA = (card, suave = true) => { if (card) tira.scrollTo({ left: posDe(card), behavior: suave ? "smooth" : "instant" }); };
+  const marcarChips = (cont, attr, valor) => cont.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset[attr] === valor)));
+  let mesVisto = null;
+  const pintarSemanas = mes => {
+    const sc = $("semanas"), ds = abiertos().filter(d => d.startsWith(mes));
+    sc.replaceChildren(); sc.hidden = ds.length <= 10;
+    if (sc.hidden) return;
+    [...new Set(ds.map(semanaDe))].forEach(k => {
+      const del = ds.filter(d => semanaDe(d) === k), a = +del[0].slice(8), z = +del[del.length - 1].slice(8);
+      const b = el("button", { type: "button" }, (a === z ? a : a + " al " + z) + " " + nombreMes(mes).slice(0, 3)); b.dataset.semana = k;
+      b.addEventListener("click", () => irA(tira.querySelector('.dia-dd[data-semana="' + k + '"]')));
+      sc.append(b);
+    });
+  };
   const marcarNav = () => {
     const cards = [...tira.querySelectorAll(".dia-dd[data-fecha]")];
     const primera = cards.find(c => posDe(c) >= tira.scrollLeft - 8) || cards[0];
-    if (primera) $("meses").querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.mes === primera.dataset.mes)));
+    if (primera) {
+      if (primera.dataset.mes !== mesVisto) { mesVisto = primera.dataset.mes; pintarSemanas(mesVisto); }
+      marcarChips($("meses"), "mes", primera.dataset.mes); marcarChips($("semanas"), "semana", primera.dataset.semana);
+    }
     const desborda = tira.scrollWidth > tira.clientWidth + 4;
     $("tPrev").hidden = $("tNext").hidden = !desborda;
     $("tPrev").disabled = tira.scrollLeft <= 4;
@@ -778,8 +812,9 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
   let raf = 0;
   tira.addEventListener("scroll", () => { cancelAnimationFrame(raf); raf = requestAnimationFrame(marcarNav); }, { passive: true });
   addEventListener("resize", marcarNav);
-  $("tPrev").addEventListener("click", () => tira.scrollBy({ left: -tira.clientWidth * 0.8, behavior: "smooth" }));
-  $("tNext").addEventListener("click", () => tira.scrollBy({ left: tira.clientWidth * 0.8, behavior: "smooth" }));
+  // Las flechas avanzan de a una pantalla (en compu, una semana).
+  $("tPrev").addEventListener("click", () => tira.scrollBy({ left: -(tira.clientWidth + 10), behavior: "smooth" }));
+  $("tNext").addEventListener("click", () => tira.scrollBy({ left: tira.clientWidth + 10, behavior: "smooth" }));
 
   const pintarDias = () => {
     const ds = abiertos(), vacio = !ds.length;
@@ -792,20 +827,21 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
     ds.forEach(d => {
       const f = fecha(d), n = libres(d).length;
       const b = el("button", { type: "button", className: "dia-dd", disabled: n === 0 });
-      b.dataset.fecha = d; b.dataset.mes = d.slice(0, 7);
+      b.dataset.fecha = d; b.dataset.mes = d.slice(0, 7); b.dataset.semana = semanaDe(d);
       b.append(el("span", { className: "top" }, fmtDiaSem.format(f)), el("b", {}, String(f.getDate())), el("span", { className: "mes" }, fmtMes.format(f)),
         el("small", {}, n ? n + (n === 1 ? " turno libre" : " turnos libres") : "Completo"));
       b.setAttribute("aria-pressed", String(d === dia));
       b.addEventListener("click", () => elegirDia(d));
       tira.append(b);
     });
-    const meses = [...new Set(ds.map(d => d.slice(0, 7)))], mc = $("meses");
-    mc.replaceChildren(); mc.hidden = meses.length < 2;
-    meses.forEach(k => {
-      const b = el("button", { type: "button" }, capital(nombreMes(k))); b.dataset.mes = k;
+    const ks = mesesDe(ds), mc = $("meses");
+    mc.replaceChildren(); mc.hidden = ks.length < 2;
+    if (!mc.hidden) ks.forEach(k => {
+      const b = el("button", { type: "button" }, capital(etiquetaMes(k, ks))); b.dataset.mes = k;
       b.addEventListener("click", () => irA(tira.querySelector('.dia-dd[data-mes="' + k + '"]')));
       mc.append(b);
     });
+    mesVisto = null;
     // Arranca en el día elegido o en el primero con turnos libres.
     irA(tira.querySelector('.dia-dd[aria-pressed="true"]') || tira.querySelector(".dia-dd:not(:disabled)"), false);
     marcarNav();
@@ -888,9 +924,11 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
     if (resuelto) return;
     if (!valido(d)) { listo(); return; }
     if (d.whatsapp) { WHATSAPP = d.whatsapp; document.querySelectorAll("[data-wa]").forEach(a => { a.href = wa(a.dataset.wa); }); }
-    DEPIDAYS = d.dias.map(x => x.fecha);
+    // Ordena y quita repetidos aunque NEO ya los mande bien; los ocupados que no son horarios del día se ignoran.
+    const unicos = a => [...new Set(a)].sort();
     HORARIOS_DIA = {}; RESERVADOS = {};
-    d.dias.forEach(x => { HORARIOS_DIA[x.fecha] = x.horarios; RESERVADOS[x.fecha] = x.ocupados; });
+    d.dias.forEach(x => { HORARIOS_DIA[x.fecha] = unicos([...(HORARIOS_DIA[x.fecha] || []), ...x.horarios]); RESERVADOS[x.fecha] = unicos([...(RESERVADOS[x.fecha] || []), ...x.ocupados]); });
+    DEPIDAYS = Object.keys(HORARIOS_DIA).sort();
     if (d.servicios.length) {
       PARA = {};
       d.servicios.forEach(s => { PARA[clave(s.categoria)] = s.categoria || "Servicios"; });
