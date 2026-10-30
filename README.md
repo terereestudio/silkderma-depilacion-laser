@@ -3,7 +3,8 @@
 Landing de Silkderma (Florencia Vich, Monte Caseros). Desarrollado por Tereré Estudio.
 
 - `index.html`: la página publicada. Netlify sirve este archivo desde la raíz de `main` (cada cambio en `main` se publica solo).
-- `preview/`: fuente de la página (`template.html`), imágenes y `build.py`, que arma `index.html`.
+- `img/`: imágenes de la página en WebP, en dos tamaños (la página elige según la pantalla y las carga recién cuando se acercan). Se generan con `python3 preview/optimizar_imagenes.py` a partir de `material/` y `preview/ig/`.
+- `preview/`: fuente de la página (`template.html`) y `build.py`, que arma `index.html` enlazando las imágenes de `img/`.
 - `material/`: fotos y capturas del cliente.
 
 La versión final queda en la raíz (no se usa `sitio/`). Los archivos de servidor que falten (`_headers` con CSP, política de privacidad, `/gracias/`) también van en la raíz. La CSP tiene que permitir `connect-src https://neo-gestion.vercel.app`.
@@ -24,4 +25,4 @@ Los combos, días y horarios se leen en vivo de NEO Gestión (`NEO_URL` en `prev
 ### Pruebas
 `python3 preview/build.py && python3 preview/pruebas_turnero.py` simula NEO con 0, 1, 2, 7, 12, 28, 60, 180 y 400 días, todos completos, datos desordenados o repetidos, días sin horarios, sin servicios, datos inválidos, 404, NEO caído y colgado, en 360, 390 y 1366 px. Correrlo antes de cada merge a `main`.
 
-Después de editar `template.html`: `python3 preview/build.py`.
+Después de editar `template.html`: `python3 preview/build.py`. Si cambia una foto: primero `python3 preview/optimizar_imagenes.py`.

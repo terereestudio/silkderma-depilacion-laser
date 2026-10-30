@@ -1,25 +1,21 @@
-"""Arma la vista previa autocontenida (imágenes embebidas) desde template.html.
-Uso: python3 preview/build.py  → escribe preview/silkderma-preview.html e index.html."""
-import base64, re
+"""Arma la página desde template.html.
+Uso: python3 preview/build.py  → escribe index.html (raíz) y preview/silkderma-preview.html.
+Las imágenes son archivos WebP en img/ (se generan con preview/optimizar_imagenes.py) y se
+enlazan, no se incrustan: así el navegador baja solo las que necesita y cuando las necesita.
+"""
+import re
 from pathlib import Path
 
 P = Path(__file__).resolve().parent
-MIME = {".jpg": "image/jpeg", ".webp": "image/webp", ".png": "image/png"}
-
-def uri(name):
-    f = P / name
-    return f"data:{MIME[f.suffix]};base64," + base64.b64encode(f.read_bytes()).decode()
-
+RAIZ = P.parent
 html = (P / "template.html").read_text()
-fijos = {
-    "FLOR": "flor.jpg", "FLOR_M": "flor-mobile.jpg", "FLOR_T": "flor-trabajando.jpg",
-    "GABINETE": "gabinete.jpg", "LOGO_H": "logo-h.webp", "LOGO_FULL": "logo-full-osc.webp",
-}
-for k, v in fijos.items():
-    html = html.replace("{{" + k + "}}", uri(v))
-html = html.replace("{{FIRMA}}", (P / "firma.txt").read_text().strip())
-html = re.sub(r"\{\{IG:([\w-]+)\}\}", lambda m: uri(f"ig/{m.group(1)}.jpg"), html)
-assert "{{" not in html, re.findall(r"\{\{[^}]+\}\}", html)
-for out in (P / "silkderma-preview.html", P.parent / "index.html"):
-    out.write_text(html)
-print("ok", len(html) // 1024, "KB")
+
+usadas = set(re.findall(r"\{\{IMG\}\}([\w.-]+\.webp)", html))
+faltan = [n for n in usadas if not (RAIZ / "img" / n).exists()]
+assert not faltan, f"faltan imágenes en img/ (correr optimizar_imagenes.py): {faltan}"
+
+for destino, prefijo in ((RAIZ / "index.html", "img/"), (P / "silkderma-preview.html", "../img/")):
+    salida = html.replace("{{IMG}}", prefijo)
+    assert "{{" not in salida, re.findall(r"\{\{[^}]+\}\}", salida)
+    destino.write_text(salida)
+print("ok", len(html.encode()) // 1024, "KB de HTML,", len(usadas), "imágenes enlazadas")
