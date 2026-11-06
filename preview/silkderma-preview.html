@@ -149,9 +149,20 @@ header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--crema
 .completos{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 20px;background:var(--rosa);border-radius:18px;padding:16px 20px;margin-bottom:14px}
 .completos p{color:var(--taupe-osc);font-size:.95rem}
 .completos b{display:block;font-family:var(--serif);font-style:italic;font-weight:500;font-size:1.2rem}
-.sin-dias{text-align:center;background:var(--salvia-clara);border-radius:22px;padding:clamp(28px,5vw,48px) 22px}
-.sin-dias h3{font-size:clamp(1.5rem,1.2rem + 1.4vw,2rem);font-style:italic;margin-bottom:8px}
-.sin-dias p{color:var(--suave);margin-bottom:20px}
+/* Pantalla "próximos Depi Days" (cuando no quedan días abiertos) */
+.sin-dias{text-align:center;background:var(--salvia-prof);color:#fff;border-radius:26px;padding:clamp(36px,6vw,64px) 22px;position:relative;overflow:hidden}
+.sin-dias::before{content:"";position:absolute;inset:0;background:radial-gradient(60% 80% at 15% 0%,rgba(175,212,159,.22),transparent 60%),radial-gradient(50% 70% at 90% 100%,rgba(175,212,159,.16),transparent 60%);pointer-events:none}
+.sin-dias > *{position:relative}
+.sin-dias .brillo{display:block}
+.sin-dias .brillo img{width:44px;height:44px;margin:0 auto 10px}
+.sin-dias h3{color:#fff;font-size:clamp(1.6rem,1.2rem + 1.8vw,2.4rem);font-style:italic;max-width:22ch;margin:0 auto 22px;text-wrap:balance}
+.carga{width:min(320px,80%);height:8px;margin:0 auto 26px;border-radius:999px;background:rgba(255,255,255,.18);overflow:hidden}
+.carga span{display:block;height:100%;width:40%;border-radius:inherit;background:linear-gradient(90deg,var(--menta-clara),var(--menta));animation:carga 1.8s ease-in-out infinite}
+@keyframes carga{0%{transform:translateX(-110%)}100%{transform:translateX(260%)}}
+.sin-dias p{color:rgba(255,255,255,.82);max-width:42ch;margin:0 auto 22px}
+.sin-dias p.gracias{color:#fff;font-family:var(--serif);font-style:italic;font-size:1.25rem;margin-bottom:6px}
+.sin-dias .btn{background:#fff;color:var(--salvia-prof)}
+.sin-dias .btn:hover,.sin-dias .btn:focus-visible{color:#fff}
 .col-datos{min-width:0}
 .datos-guia{border:1.5px dashed var(--beige);border-radius:16px;padding:22px;color:var(--suave);font-size:.95rem;text-align:center;margin-top:42px}
 .combo.esqueleto{min-height:300px;border-color:var(--arena);background:linear-gradient(110deg,var(--salvia-clara) 30%,#EEF3EA 50%,var(--salvia-clara) 70%);background-size:250% 100%;animation:brillo 1.6s ease-in-out infinite}
@@ -361,7 +372,7 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
 .wa-float svg{width:28px;height:28px;fill:#fff}
 .pend{background:var(--rosa);border-radius:4px;padding:0 4px;font-size:.85em}
 
-@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}.brillo{color:var(--crema)}.combo .precio,.dd-txt{color:var(--salvia-prof)}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}.brillo{color:var(--crema)}.combo .precio,.dd-txt{color:var(--salvia-prof)}.carga span{transform:none;width:60%}}
 
 /* Firma Tereré Estudio */
 .firma-te { background: #161415; padding: 14px 16px; text-align: center; }
@@ -465,8 +476,11 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
       </div>
 
       <div class="sin-dias" id="sinDias" hidden>
-        <h3>Por ahora no hay Depi Days abiertos</h3>
-        <p>Escribime y te aviso apenas abra nuevos días.</p>
+        <picture class="brillo" aria-hidden="true"><source srcset="../img/brillos-quieto.png" media="(prefers-reduced-motion: reduce)"><img src="../img/brillos.png" width="64" height="64" alt="" loading="lazy" decoding="async"></picture>
+        <h3>Los Depi Days de <span id="mesProx">diciembre</span> están cargándose…</h3>
+        <div class="carga" role="progressbar" aria-label="Preparando los próximos Depi Days"><span></span></div>
+        <p class="gracias">Gracias por elegir Silkderma.</p>
+        <p>Estoy preparando los nuevos turnos. Escribime y te aviso apenas estén.</p>
         <a class="btn" href="#" data-wa="Hola Flor! Quiero que me avises cuando abras nuevos Depi Days." target="_blank" rel="noopener noreferrer">Avisame por WhatsApp</a>
       </div>
 
@@ -820,7 +834,11 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
     tira.replaceChildren(); tira.setAttribute("aria-busy", "false"); $("cargando").hidden = true;
     $("sinDias").hidden = !vacio; $("resDias").hidden = vacio; $("como").hidden = vacio;
     document.querySelector(".demo").hidden = vacio;
-    if (vacio) { $("reservaGrid").hidden = true; return; }
+    if (vacio) {
+      // Próximo mes según la fecha de hoy (después de noviembre, "diciembre").
+      $("mesProx").textContent = fmtMes.format(new Date(hoy.getFullYear(), hoy.getMonth() + 1, 1));
+      $("reservaGrid").hidden = true; return;
+    }
     if ($("ok").hidden) $("reservaGrid").hidden = false;
     $("completos").hidden = ds.some(d => libres(d).length > 0);
     ds.forEach(d => {
