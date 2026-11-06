@@ -14,8 +14,12 @@ usadas = set(re.findall(r"\{\{IMG\}\}([\w.-]+\.(?:webp|png))", html))
 faltan = [n for n in usadas if not (RAIZ / "img" / n).exists()]
 assert not faltan, f"faltan imágenes en img/ (correr optimizar_imagenes.py): {faltan}"
 
+# El canje de regalos va en un archivo aparte: solo se descarga si el link trae ?regalo=
+(RAIZ / "js").mkdir(exist_ok=True)
+(RAIZ / "js" / "regalo.js").write_text((P / "regalo.js").read_text())
+
 for destino, prefijo in ((RAIZ / "index.html", "img/"), (P / "silkderma-preview.html", "../img/")):
-    salida = html.replace("{{IMG}}", prefijo).replace("{V}", prefijo.replace("img/", "video/"))
+    salida = html.replace("{{IMG}}", prefijo).replace("{V}", prefijo.replace("img/", "video/")).replace("{{JS}}", prefijo.replace("img/", "js/"))
     assert "{{" not in salida, re.findall(r"\{\{[^}]+\}\}", salida)
     destino.write_text(salida)
 print("ok", len(html.encode()) // 1024, "KB de HTML,", len(usadas), "imágenes enlazadas")
