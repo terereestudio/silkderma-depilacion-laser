@@ -370,6 +370,13 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
 .firma-te a:hover img, .firma-te a:focus-visible img { opacity: 1; }
 .firma-te a:focus-visible { outline: 2px solid #9FBD2B; outline-offset: 4px; }
 @media (max-width: 600px) { .firma-te img { height: 24px; } .firma-te{padding-bottom:84px} }
+/* Compu: el hero entra completo en la primera pantalla (título, botones y foto) */
+@media(min-width:821px){
+  .hero{padding:clamp(20px,3vh,40px) 0 clamp(28px,4vh,52px)}
+  .hero h1{font-size:clamp(2.4rem,1rem + 3.2vw,4rem);margin:12px 0 14px}
+  .hero p.lead{margin-bottom:22px}
+  .hero-photo{width:min(420px,100%,calc((100svh - 150px) * .8))}
+}
 </style>
 </head>
 <body>
