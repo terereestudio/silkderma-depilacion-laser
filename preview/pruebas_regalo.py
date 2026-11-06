@@ -13,10 +13,10 @@ URL = (RAIZ / "index.html").as_uri()
 CAPT = Path(sys.argv[1]) if len(sys.argv) > 1 else None
 API = "https://neo-gestion.vercel.app/api/publico/"
 GRID = ["09:00", "09:40", "10:20", "11:00", "11:40", "12:20"]
-AGENDA = {"negocio": "Silkderma", "whatsapp": "5493775445169",
+AGENDA = {"negocio": "Silkderma", "whatsapp": "5493775445169", "vouchers": True, "proximamente": [],
           "servicios": [{"id": "s2", "categoria": "Mujeres", "nombre": "Combo 2", "zonas": ["Axilas"], "precio": 29000.0, "duracion": 40}],
           "dias": [{"fecha": f"2026-12-{d:02d}", "horarios": GRID, "ocupados": ["09:00"]} for d in (10, 11, 12)]}
-S = {i: {"id": f"s{i}", "nombre": f"Combo {i}", "zonas": ["Axilas", "Cavado completo"]} for i in range(1, 5)}
+S = {i: {"id": f"s{i}", "nombre": f"Combo {i}", "categoria": "Mujeres", "zonas": ["Axilas", "Cavado completo"]} for i in range(1, 5)}
 COMBO = {"numero": "0123", "tipo": "combo", "para": "María", "de": "Juan", "mensaje": "¡Feliz cumple!", "vence": "2026-12-31",
          "servicio": S[2], "servicios_disponibles": None}
 
@@ -31,7 +31,7 @@ def monto(elegidos):
 PRECIO = re.compile(r"\$\s?\d|\d{2}\.\d{3}|saldo|monto", re.I)
 
 
-async def caso(b, nombre, codigo, get, post=None, pasos=None, w=390):
+async def caso(b, nombre, codigo, get, post=None, pasos=None, w=390, agenda=None):
     pg = await b.new_page(viewport={"width": w, "height": 844}, device_scale_factor=2 if w < 800 else 1)
     errores, posts, fallas = [], [], []
     pg.on("pageerror", lambda e: errores.append(str(e)))
@@ -49,7 +49,7 @@ async def caso(b, nombre, codigo, get, post=None, pasos=None, w=390):
             st, body = get(el)
             return await route.fulfill(status=st, body=json.dumps(body), content_type="application/json")
         if "/turnos/" in url:
-            return await route.fulfill(status=200, body=json.dumps(AGENDA), content_type="application/json")
+            return await route.fulfill(status=200, body=json.dumps(agenda or AGENDA), content_type="application/json")
         await route.abort()
 
     await pg.route(API + "**", h)
@@ -148,6 +148,16 @@ async def main():
         fl, posts = await caso(b, "sin-consentimiento", "K7P2-9XQM", lambda e: (200, COMBO), lambda n: (200, {}), p_sin)
         total += len(fl) + (1 if posts else 0)
         if posts: print("FALLA: envió el canje sin consentimiento")
+
+        async def p_pausa(pg, f):
+            if "no están disponibles" not in await pg.locator("#regalo").inner_text(): f.append("no avisa que los regalos están pausados")
+            if not await pg.locator("#regalo a[href*='wa.me']").count(): f.append("falta el botón de WhatsApp")
+        fl, _ = await caso(b, "pausado-agenda", "K7P2-9XQM", lambda e: (200, COMBO), None, p_pausa, agenda={**AGENDA, "vouchers": False}); total += len(fl)
+        fl, _ = await caso(b, "pausado-410", "K7P2-9XQM", lambda e: (410, {"estado": "pausado"}), None, p_pausa); total += len(fl)
+
+        async def p_cat(pg, f):
+            if "Combo 2 · Mujeres" not in await pg.locator("#regalo").inner_text(): f.append("no muestra la categoría")
+        fl, _ = await caso(b, "categoria", "K7P2-9XQM", lambda e: (200, COMBO), None, p_cat); total += len(fl)
 
         fl, _ = await caso(b, "combo-compu", "K7P2-9XQM", lambda e: (200, COMBO), None, None, w=1366); total += len(fl)
         await b.close()

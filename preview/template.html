@@ -538,6 +538,11 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
 .sk-card{height:190px;border-radius:22px}.sk-linea{height:18px}.sk-linea.corta{width:60%}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 @media (prefers-reduced-motion:reduce){.regalo-ico.abre .tapa{animation:none;transform:translate(-6px,-14px) rotate(-22deg)}.regalo-ico.abre .chispas{animation:none;opacity:1}}
+.proximos{display:grid;gap:8px;margin-top:10px}
+.proximo{display:flex;align-items:center;gap:16px;background:var(--salvia-prof);color:#fff;border-radius:16px;padding:12px 16px}
+.proximo p{margin:0;font-family:var(--serif);font-style:italic;font-size:1.05rem;flex:1}
+.proximo .carga{width:110px;margin:0;flex:0 0 110px;height:6px}
+@media(max-width:820px){.proximo{flex-direction:column;align-items:flex-start;gap:8px}.proximo .carga{width:100%;flex-basis:auto}}
 </style>
 </head>
 <body>
@@ -609,7 +614,7 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
   </div>
 </section>
 
-<section class="regala" id="regala">
+<section class="regala" id="regala" hidden>
   <div class="wrap regala-caja">
     <svg class="regala-ico" viewBox="0 0 120 120" aria-hidden="true"><rect x="22" y="58" width="76" height="50" rx="6" fill="#74956F"/><rect x="54" y="58" width="12" height="50" fill="#D9B35C"/><rect x="16" y="44" width="88" height="18" rx="5" fill="#4E6B49"/><rect x="54" y="44" width="12" height="18" fill="#D9B35C"/><path d="M60 44c-6-14-24-20-26-9-2 8 13 9 26 9zM60 44c6-14 24-20 26-9 2 8-13 9-26 9z" fill="#E8C774"/><circle cx="60" cy="44" r="5" fill="#D9B35C"/></svg>
     <div>
@@ -646,7 +651,7 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
 
       <div class="sin-dias" id="sinDias" hidden>
         <picture class="brillo" aria-hidden="true"><source srcset="{{IMG}}brillos-quieto.png" media="(prefers-reduced-motion: reduce)"><img src="{{IMG}}brillos.png" width="64" height="64" alt="" loading="lazy" decoding="async"></picture>
-        <h3>Los Depi Days de <span id="mesProx">diciembre</span> están cargándose…</h3>
+        <h3 id="sinDiasTit">Los Depi Days de <span id="mesProx">diciembre</span> están cargándose…</h3>
         <div class="carga" role="progressbar" aria-label="Preparando los próximos Depi Days"><span></span></div>
         <p class="gracias">Gracias por elegir Silkderma.</p>
         <p>Estoy preparando los nuevos turnos.<br class="solo-pc"> Escribime y te aviso apenas estén.</p>
@@ -684,6 +689,7 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
           <button type="button" class="tira-flecha" id="tNext" aria-label="Más días" hidden>›</button>
         </div>
         <p class="cargando" id="cargando" role="status">Cargando turnos…</p>
+        <div class="proximos" id="proximos" hidden></div>
       </div>
 
       <div class="res-grid" id="reservaGrid">
@@ -886,6 +892,7 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
   // Agenda en NEO Gestión: Flor la edita desde la app. Si NEO no responde, quedan los datos de abajo.
   const NEO_URL = "https://neo-gestion.vercel.app/api/publico/turnos/silkderma";
   let WHATSAPP = "5493775445169";
+  let PROXIMOS = [], mesProximo = "";
   // Respaldo: solo se usa si NEO no responde. Grilla general de 9:00 a 20:30, cada 40 min.
   let DEPIDAYS = ["2026-11-05", "2026-11-06", "2026-11-08", "2026-11-09"];
   const INICIO = 9 * 60, FIN = 20 * 60 + 30, DURACION = 40;
@@ -1118,11 +1125,17 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
       });
       pc.append(el("option", { value: "" }, "Todavía no sé, quiero consultar"));
       // Próximo mes según la fecha de hoy (después de noviembre, "diciembre").
-      $("mesProx").textContent = fmtMes.format(new Date(hoy.getFullYear(), hoy.getMonth() + 1, 1));
+      // Mes que viene, o el primer mes que Flor marcó como "próximamente" en NEO (con su texto).
+      const px = PROXIMOS[0];
+      mesProximo = px ? nombreMes(px.mes) : fmtMes.format(new Date(hoy.getFullYear(), hoy.getMonth() + 1, 1));
+      if (px) $("sinDiasTit").textContent = px.texto.replace(/[.…]*$/, "") + "…";
+      else { $("sinDiasTit").replaceChildren("Los Depi Days de ", el("span", { id: "mesProx" }, mesProximo), " están cargándose…"); }
       $("reservaGrid").hidden = true; return;
     }
     if ($("ok").hidden) $("reservaGrid").hidden = false;
     $("completos").hidden = ds.some(d => libres(d).length > 0);
+    const pb = $("proximos"); pb.replaceChildren(); pb.hidden = !PROXIMOS.length;
+    PROXIMOS.forEach(x => { const b = el("div", { className: "carga" }), c = el("div", { className: "proximo" }); b.append(el("span")); c.append(el("p", {}, x.texto), b); pb.append(c); });
     ds.forEach(d => {
       const f = fecha(d), n = libres(d).length;
       const b = el("button", { type: "button", className: "dia-dd", disabled: n === 0 });
@@ -1170,7 +1183,7 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
     if (f.elements["bot-field"].value || Date.now() - cargado < 3000) return; // honeypot + trampa de tiempo
     if (!f.reportValidity()) return;
     const c = COMBOS.find(x => x.id === f.elements.combo.value);
-    const txt = "Hola Flor! Quiero reservar con anticipación para los Depi Days de " + $("mesProx").textContent + "." +
+    const txt = "Hola Flor! Quiero reservar con anticipación para los Depi Days de " + mesProximo + "." +
       "\nNombre: " + f.elements.nombre.value.trim() + "\nWhatsApp: " + f.elements.telefono.value.trim() +
       "\nCombo: " + (c ? c.nombre + " (" + (PARA[c.genero] || c.genero) + ") · " + c.precio : "A consultar") +
       "\nHorario que prefiero: " + f.elements.franja.value.toLowerCase();
@@ -1237,6 +1250,10 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
     if (resuelto) return;
     if (!valido(d)) { listo(); return; }
     if (d.whatsapp) { WHATSAPP = d.whatsapp; document.querySelectorAll("[data-wa]").forEach(a => { a.href = wa(a.dataset.wa); }); }
+    // Regalos: solo se muestran si Flor los tiene activos en NEO.
+    $("regala").hidden = d.vouchers !== true;
+    // Meses que Flor está armando: NEO no manda sus días, solo el cartel.
+    PROXIMOS = Array.isArray(d.proximamente) ? d.proximamente.filter(x => x && /^\d{4}-\d{2}$/.test(x.mes) && typeof x.texto === "string" && x.texto.trim()).slice(0, 6) : [];
     // Ordena y quita repetidos aunque NEO ya los mande bien; los ocupados que no son horarios del día se ignoran.
     const unicos = a => [...new Set(a)].sort();
     HORARIOS_DIA = {}; RESERVADOS = {};

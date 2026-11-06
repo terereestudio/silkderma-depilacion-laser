@@ -77,6 +77,7 @@
     noexiste: ["No encontramos este regalo", "Revisá el link que te llegó o escribile a Flor."],
     intentos: ["Esperá unos minutos", "Hubo demasiados intentos. Probá de nuevo en un rato."],
     red: ["No pudimos cargar tu regalo", "Revisá tu conexión y probá de nuevo."],
+    pausado: ["Los regalos no están disponibles en este momento", "Escribile a Flor y te cuenta cuándo vuelven."],
   };
   const estado = (k, extra) => {
     const [t, p] = ESTADOS[k];
@@ -103,9 +104,12 @@
     if (!/^[A-Z0-9]{4}-[A-Z0-9]{4}$/.test(CODIGO)) return estado("noexiste");
     cargando();
     const [r, a] = await Promise.all([consultar(), pedir(NEO + "/turnos/" + SLUG)]);
+    if (a.status === 200 && a.d && Array.isArray(a.d.dias)) {
+      agenda = a.d.dias; if (/^\d{8,15}$/.test(a.d.whatsapp || "")) WA = a.d.whatsapp;
+      if (a.d.vouchers === false) return estado("pausado");   // Flor pausó los regalos (o todavía no se lanzaron)
+    }
     if (r.status !== 200 || !r.d) return manejarError(r);
     V = r.d;
-    if (a.status === 200 && a.d && Array.isArray(a.d.dias)) { agenda = a.d.dias; if (/^\d{8,15}$/.test(a.d.whatsapp || "")) WA = a.d.whatsapp; }
     bienvenida();
   };
   const saludo = () => {
