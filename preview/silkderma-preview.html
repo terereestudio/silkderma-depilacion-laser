@@ -120,6 +120,7 @@ header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--crema
 .como small{flex-basis:100%;color:var(--suave);font-size:.84rem}
 @media(max-width:820px){.res-head{grid-template-columns:1fr}.como ol{flex-direction:column}}
 .res-head h2 .dd{font-style:normal;letter-spacing:-.01em}
+.dd .brillo img{display:inline-block;width:1em;height:1em;vertical-align:-.1em}
 .res-head p{color:var(--suave);max-width:46ch}
 .res-head .gancho{font-family:var(--serif);font-style:italic;font-size:1.2rem;color:var(--salvia-osc);margin-bottom:6px}
 .res-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(24px,4vw,48px)}
@@ -445,7 +446,7 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
       <div class="res-head">
         <div>
           <span class="eyebrow" id="ddEyebrow">Monte Caseros</span>
-          <h2 style="margin-top:12px"><span class="dd"><span aria-hidden="true">✨</span> Depi Days <span aria-hidden="true">✨</span></span></h2>
+          <h2 style="margin-top:12px"><span class="dd"><picture class="brillo" aria-hidden="true"><source srcset="../img/brillos-quieto.png" media="(prefers-reduced-motion: reduce)"><img src="../img/brillos.png" width="64" height="64" alt="" loading="lazy" decoding="async"></picture> Depi Days <picture class="brillo" aria-hidden="true"><source srcset="../img/brillos-quieto.png" media="(prefers-reduced-motion: reduce)"><img src="../img/brillos.png" width="64" height="64" alt="" loading="lazy" decoding="async"></picture></span></h2>
         </div>
         <div>
           <p class="gancho">¿Ya pensaste en empezar láser?</p>

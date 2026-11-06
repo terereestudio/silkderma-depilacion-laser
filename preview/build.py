@@ -10,7 +10,7 @@ P = Path(__file__).resolve().parent
 RAIZ = P.parent
 html = (P / "template.html").read_text()
 
-usadas = set(re.findall(r"\{\{IMG\}\}([\w.-]+\.webp)", html))
+usadas = set(re.findall(r"\{\{IMG\}\}([\w.-]+\.(?:webp|png))", html))
 faltan = [n for n in usadas if not (RAIZ / "img" / n).exists()]
 assert not faltan, f"faltan imágenes en img/ (correr optimizar_imagenes.py): {faltan}"
 
