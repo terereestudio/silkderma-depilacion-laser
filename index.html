@@ -401,17 +401,16 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
 .navidad .hero{position:relative}
 .navidad .hero > .wrap{position:relative;z-index:1}
 .navidad .hero::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.9;
-  background-image:radial-gradient(circle,rgba(160,184,154,.55) 0 2px,transparent 2.6px),radial-gradient(circle,rgba(160,184,154,.4) 0 1.5px,transparent 2px),radial-gradient(circle,rgba(217,179,92,.35) 0 1.6px,transparent 2.2px);
-  background-size:173px 229px,127px 163px,263px 301px;background-position:0 0,41px 67px,97px 23px;animation:nieve 22s linear infinite}
-@keyframes nieve{to{background-position:30px 687px,-11px 719px,127px 625px}}
+  background-image:radial-gradient(circle,rgba(217,179,92,.55) 0 1.8px,transparent 2.4px),radial-gradient(circle,rgba(175,212,159,.6) 0 1.4px,transparent 2px);background-size:173px 229px,263px 301px;background-position:0 0,97px 23px;animation:destello 4s ease-in-out infinite}
+@keyframes destello{0%,100%{opacity:.35}50%{opacity:1}}
 .fiestas{background:var(--salvia-prof);color:#fff;text-align:center;font-size:.82rem;letter-spacing:.04em;padding:8px 16px}
 .fiestas b{font-family:var(--serif);font-style:italic;font-weight:500;font-size:1rem;letter-spacing:0;color:var(--menta-clara)}
 /* Stickers navideños: borde blanco y sombra, flotan apenas */
-.sticker,.hero-photo img.sticker{position:absolute!important;z-index:4;pointer-events:none;width:var(--t,64px)!important;height:auto!important;aspect-ratio:1!important;border-radius:0!important;box-shadow:none!important;object-fit:contain!important;margin:0!important;order:0!important;filter:drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff) drop-shadow(0 6px 8px rgba(59,82,55,.22));animation:flota 6s ease-in-out infinite;animation-delay:var(--d,0s)}
-@keyframes flota{0%,100%{transform:translateY(0) rotate(var(--r,0deg))}50%{transform:translateY(-6px) rotate(calc(var(--r,0deg) + 4deg))}}
+.sticker,.hero-photo img.sticker{position:absolute!important;z-index:4;pointer-events:none;width:var(--t,64px)!important;height:auto!important;aspect-ratio:1!important;border-radius:0!important;box-shadow:none!important;object-fit:contain!important;margin:0!important;order:0!important;filter:drop-shadow(2px 0 0 #fff) drop-shadow(-2px 0 0 #fff) drop-shadow(0 2px 0 #fff) drop-shadow(0 -2px 0 #fff) drop-shadow(0 6px 8px rgba(59,82,55,.22));animation:aparece 12s ease-in-out infinite;animation-delay:var(--d,0s)}
+@keyframes aparece{0%,100%{opacity:0;transform:scale(.4) rotate(calc(var(--r,0deg) - 20deg))}8%{opacity:1;transform:scale(1.08) rotate(var(--r,0deg))}12%{transform:scale(1) rotate(var(--r,0deg))}35%{transform:translateY(-6px) rotate(calc(var(--r,0deg) + 4deg))}58%{opacity:1;transform:translateY(0) rotate(var(--r,0deg))}68%{opacity:0;transform:scale(.6) rotate(calc(var(--r,0deg) + 16deg))}}
 .con-sticker{position:relative}
 @media(max-width:820px){.sticker.solo-pc-st{display:none}.sticker,.hero-photo img.sticker{width:calc(var(--t,64px) * .72)!important}}
-@media (prefers-reduced-motion:reduce){.navidad .hero::before,.sticker{animation:none}}
+@media (prefers-reduced-motion:reduce){.navidad .hero::before,.sticker{animation:none;opacity:1}}
 </style>
 </head>
 <body>
@@ -755,13 +754,18 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
     document.documentElement.classList.add("navidad");
     // Stickers: [dónde, archivo, estilo, solo en compu]
     const base = document.querySelector(".brillo img").getAttribute("src").replace("brillos.png", "navidad/");
-    [[".hero-photo", "estrella", "top:-18px;right:4%;--t:62px;--r:12deg", 0],
-     [".hero-photo", "esfera", "top:38%;right:-26px;--t:70px;--r:-8deg;--d:-2s", 1],
-     [".hero .wrap > div", "regalo", "bottom:-46px;right:6%;--t:68px;--r:-6deg;--d:-1s", 1],
-     [".res-head", "copo", "top:-10px;right:0;--t:54px;--r:10deg;--d:-3s", 0],
-     ["#combos .wrap", "baston", "top:-8px;left:2%;--t:70px;--r:-14deg;--d:-1.5s", 1],
-     ["#combos .wrap", "arbolito", "top:-14px;right:2%;--t:76px;--r:8deg;--d:-4s", 0],
-     [".final .final-grid", "regalo", "top:70px;right:31%;--t:66px;--r:-10deg;--d:-2.5s", 1]
+    // Aparecen y desaparecen en turnos (--d desfasa cada uno); en celular se muestran menos.
+    [[".hero-photo", "estrella", "top:-18px;right:4%;--t:62px;--r:12deg;--d:0s", 0],
+     [".hero-photo", "reno", "top:40%;right:-34px;--t:80px;--r:-6deg;--d:-4s", 1],
+     [".hero-photo", "esfera", "bottom:-26px;right:12%;--t:60px;--r:-8deg;--d:-8s", 0],
+     [".hero .wrap > div", "papanoel", "bottom:-54px;right:4%;--t:84px;--r:-6deg;--d:-2s", 1],
+     ["#dudas .wrap", "corona", "top:-18px;right:1%;--t:70px;--r:8deg;--d:-6s", 1],
+     ["#combos .wrap", "baston", "top:-8px;left:2%;--t:70px;--r:-14deg;--d:-1s", 1],
+     ["#combos .wrap", "arbolito", "top:-14px;right:2%;--t:76px;--r:8deg;--d:-5s", 0],
+     [".res-head", "campanas", "top:-14px;right:0;--t:66px;--r:10deg;--d:-3s", 0],
+     ["#preguntas .gabinete", "pandulce", "top:-30px;right:-18px;--t:74px;--r:10deg;--d:-7s", 1],
+     [".final .final-grid", "regalo", "top:70px;right:31%;--t:66px;--r:-10deg;--d:-2.5s", 1],
+     [".final .final-grid", "brindis", "top:-20px;left:38%;--t:70px;--r:6deg;--d:-9s", 0]
     ].forEach(([sel, img, css, pc]) => {
       const cont = document.querySelector(sel); if (!cont) return;
       cont.classList.add("con-sticker");
