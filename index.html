@@ -162,6 +162,21 @@ header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--crema
 .sin-dias p{color:rgba(255,255,255,.82);max-width:42ch;margin:0 auto 22px}
 .sin-dias p.gracias{color:#fff;font-family:var(--serif);font-style:italic;font-size:1.25rem;margin-bottom:6px}
 .sin-dias .btn{background:#fff;color:var(--salvia-prof)}
+.solo-pc{display:none}
+@media(min-width:821px){.solo-pc{display:inline}}
+.pre-form{max-width:620px;margin:30px auto 0;padding:26px clamp(18px,3vw,30px);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:22px;text-align:left}
+.pre-form h4{font-family:var(--serif);font-style:italic;font-weight:500;font-size:1.45rem;line-height:1.2;text-wrap:balance;color:#fff;text-align:center;margin:0 0 4px}
+.sin-dias .pre-form .pre-sub{text-align:center;margin:0 auto 18px}
+.pre-campos{display:grid;grid-template-columns:1fr 1fr;gap:12px 14px;margin-bottom:16px}
+.pre-form label{display:grid;gap:6px;font-size:.85rem;font-weight:600;color:rgba(255,255,255,.9)}
+.pre-form input,.pre-form select{font:inherit;font-weight:400;font-size:1rem;color:var(--taupe-osc);background:#fff;border:1.5px solid transparent;border-radius:12px;padding:11px 12px;width:100%}
+.pre-form input:focus,.pre-form select:focus{outline:2px solid var(--menta);outline-offset:1px}
+.pre-form input:user-invalid{border-color:var(--rosa)}
+.pre-form .btn{width:100%;justify-content:center}
+.sin-dias .pre-form .pre-ok{color:#fff;background:rgba(175,212,159,.2);border-radius:12px;padding:10px 12px;margin:12px 0 0;text-align:center}
+.sin-dias .pre-form .legal{font-size:.78rem;color:rgba(255,255,255,.65);text-align:center;margin:12px auto 0;max-width:none}
+.sin-dias .pre-form .legal a{color:#fff}
+@media(max-width:820px){.pre-campos{grid-template-columns:1fr}.pre-form{padding:22px 14px}.pre-form select{font-size:.95rem;padding-inline:10px}}
 .sin-dias .btn:hover,.sin-dias .btn:focus-visible{color:#fff}
 .col-datos{min-width:0}
 .datos-guia{border:1.5px dashed var(--beige);border-radius:16px;padding:22px;color:var(--suave);font-size:.95rem;text-align:center;margin-top:42px}
@@ -480,8 +495,21 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
         <h3>Los Depi Days de <span id="mesProx">diciembre</span> están cargándose…</h3>
         <div class="carga" role="progressbar" aria-label="Preparando los próximos Depi Days"><span></span></div>
         <p class="gracias">Gracias por elegir Silkderma.</p>
-        <p>Estoy preparando los nuevos turnos. Escribime y te aviso apenas estén.</p>
-        <a class="btn" href="#" data-wa="Hola Flor! Quiero que me avises cuando abras nuevos Depi Days." target="_blank" rel="noopener noreferrer">Avisame por WhatsApp</a>
+        <p>Estoy preparando los nuevos turnos.<br class="solo-pc"> Escribime y te aviso apenas estén.</p>
+        <form class="pre-form" id="preForm" novalidate>
+          <h4>¿Querés reservar con anticipación?</h4>
+          <p class="pre-sub">Escribime y cerca de la fecha coordinamos tu día y horario.</p>
+          <div class="pre-campos">
+            <label>Nombre y apellido<input name="nombre" required maxlength="60" autocomplete="name"></label>
+            <label>WhatsApp<input name="telefono" type="tel" required maxlength="20" pattern="\+?[0-9 ]{8,20}" autocomplete="tel" placeholder="Ej. 3775 123456"></label>
+            <label>Combo<select name="combo" id="preCombo"></select></label>
+            <label>Horario que preferís<select name="franja"><option>Me da igual</option><option>A la mañana</option><option>A la tarde</option></select></label>
+          </div>
+          <p class="hp" aria-hidden="true"><label>No completar<input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+          <button class="btn" type="submit"><span class="txt-largo">Reservar con anticipación por WhatsApp</span><span class="txt-corto">Reservar por WhatsApp</span></button>
+          <p class="pre-ok" id="preOk" role="status" hidden>¡Gracias! Se abrió WhatsApp con tu mensaje: tocá Enviar y Flor te responde.</p>
+          <p class="legal">Tus datos van solo a Flor por WhatsApp. Al enviarlos aceptás nuestra <a href="#">política de privacidad</a>.</p>
+        </form>
       </div>
 
       <div class="res-dias" id="resDias">
@@ -835,6 +863,13 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
     $("sinDias").hidden = !vacio; $("resDias").hidden = vacio; $("como").hidden = vacio;
     document.querySelector(".demo").hidden = vacio;
     if (vacio) {
+      const pc = $("preCombo"); pc.replaceChildren();
+      [...new Set(COMBOS.map(c => c.genero))].forEach(g => {
+        const og = el("optgroup", { label: PARA[g] || capital(g) });
+        COMBOS.filter(c => c.genero === g).forEach(c => og.append(el("option", { value: c.id }, c.nombre + " " + (PARA[g] || capital(g)) + " · " + c.precio)));
+        pc.append(og);
+      });
+      pc.append(el("option", { value: "" }, "Todavía no sé, quiero consultar"));
       // Próximo mes según la fecha de hoy (después de noviembre, "diciembre").
       $("mesProx").textContent = fmtMes.format(new Date(hoy.getFullYear(), hoy.getMonth() + 1, 1));
       $("reservaGrid").hidden = true; return;
@@ -881,6 +916,20 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
 
   /* ===== Envío de la reserva ===== */
   const cargado = Date.now();
+  // Pre-reserva (pantalla de próximos Depi Days): arma el mensaje y abre WhatsApp. No guarda nada.
+  $("preForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const f = e.target;
+    if (f.elements["bot-field"].value || Date.now() - cargado < 3000) return; // honeypot + trampa de tiempo
+    if (!f.reportValidity()) return;
+    const c = COMBOS.find(x => x.id === f.elements.combo.value);
+    const txt = "Hola Flor! Quiero reservar con anticipación para los Depi Days de " + $("mesProx").textContent + "." +
+      "\nNombre: " + f.elements.nombre.value.trim() + "\nWhatsApp: " + f.elements.telefono.value.trim() +
+      "\nCombo: " + (c ? c.nombre + " (" + (PARA[c.genero] || c.genero) + ") · " + c.precio : "A consultar") +
+      "\nHorario que prefiero: " + f.elements.franja.value.toLowerCase();
+    window.open(wa(txt), "_blank", "noopener");
+    $("preOk").hidden = false;
+  });
   $("form").addEventListener("submit", e => {
     e.preventDefault();
     const f = e.target;
