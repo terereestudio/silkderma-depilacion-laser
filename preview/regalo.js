@@ -15,6 +15,8 @@
   const fecha = s => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d); };
   const fDia = new Intl.DateTimeFormat("es-AR", { weekday: "long", day: "numeric", month: "long" });
   const fLargo = new Intl.DateTimeFormat("es-AR", { day: "numeric", month: "long" });
+  // Nombre del combo con su categoría si NEO la manda ("Combo 1 · Mujeres")
+  const nom = s => s.nombre + (s.categoria ? " · " + s.categoria : "");
   const diaTxt = s => { const x = fDia.format(fecha(s)).replace(",", ""); return x.charAt(0).toUpperCase() + x.slice(1); };
 
   // Código: con o sin guion, mayúsculas o minúsculas → "K7P2-9XQM"
@@ -61,7 +63,7 @@
     if (V.para) cuerpo.append(el("p", { className: "v-linea" }, el("small", {}, "Para"), " " + V.para));
     if (V.de) cuerpo.append(el("p", { className: "v-linea" }, el("small", {}, "De"), " " + V.de));
     if (V.mensaje) cuerpo.append(el("blockquote", {}, "“" + V.mensaje + "”"));
-    cuerpo.append(el("p", { className: "v-que" }, V.tipo === "combo" && V.servicio ? V.servicio.nombre : "Combos a elección"));
+    cuerpo.append(el("p", { className: "v-que" }, V.tipo === "combo" && V.servicio ? nom(V.servicio) : "Combos a elección"));
     const pie = el("div", { className: "v-pie" }, "Válido hasta el " + fLargo.format(fecha(V.vence)));
     v.append(cab, cuerpo, pie);
     return v;
@@ -114,7 +116,7 @@
     const partes = [...saludo(), voucher()];
     if (V.tipo === "combo" && V.servicio) {
       elegidos = [V.servicio];
-      partes.push(el("div", { className: "r-combo" }, el("b", {}, V.servicio.nombre), el("span", {}, (V.servicio.zonas || []).join(" · "))),
+      partes.push(el("div", { className: "r-combo" }, el("b", {}, nom(V.servicio)), el("span", {}, (V.servicio.zonas || []).join(" · "))),
         el("div", { className: "r-acciones" }, boton("Elegir día y horario", () => { turnos = [{ s: V.servicio }]; paso2(); })));
     } else partes.push(el("div", { id: "rCombos" }));
     pantalla(el("div", { className: "r-bienvenida" }, ...partes));
@@ -129,12 +131,12 @@
     disp.forEach(s => {
       const b = boton("Agregar", () => cambiar(() => elegidos.push(s)), "btn btn-chico");
       b.disabled = elegidos.length >= 10;
-      lista.append(el("div", { className: "r-op" }, el("div", {}, el("b", {}, s.nombre), el("span", {}, (s.zonas || []).join(" · "))), b));
+      lista.append(el("div", { className: "r-op" }, el("div", {}, el("b", {}, nom(s)), el("span", {}, (s.zonas || []).join(" · "))), b));
     });
     const res = el("div", { className: "r-resumen" });
     if (elegidos.length) {
       res.append(el("b", {}, "Tu elección"));
-      elegidos.forEach((s, i) => res.append(el("div", { className: "r-chip" }, el("span", {}, s.nombre), boton("Quitar", () => cambiar(() => elegidos.splice(i, 1)), "r-quitar"))));
+      elegidos.forEach((s, i) => res.append(el("div", { className: "r-chip" }, el("span", {}, nom(s)), boton("Quitar", () => cambiar(() => elegidos.splice(i, 1)), "r-quitar"))));
     }
     const hijos = [el("h3", {}, "Elegí tus combos"), el("p", { className: "r-sub" }, disp.length ? "Están incluidos en tu regalo. Podés sumar más de uno." : "¡Ya elegiste todo lo que incluye tu regalo!"), lista, res];
     if (elegidos.length) hijos.push(el("div", { className: "r-acciones" }, boton(elegidos.length > 1 ? "Elegir días y horarios" : "Elegir día y horario", () => { turnos = elegidos.map(s => ({ s })); paso2(); })));
@@ -155,7 +157,7 @@
     const dias = agenda.filter(d => !V.vence || d.fecha <= V.vence).filter(d => libres(d).length);
     const bloques = turnos.map((t, i) => {
       const b = el("div", { className: "r-turno" });
-      b.append(el("h4", {}, (turnos.length > 1 ? (i + 1) + ". " : "") + t.s.nombre));
+      b.append(el("h4", {}, (turnos.length > 1 ? (i + 1) + ". " : "") + nom(t.s)));
       const tira = el("div", { className: "r-dias" });
       dias.forEach(d => {
         const btn = boton("", () => { t.fecha = d.fecha; t.hora = null; paso2(); }, "r-dia");
@@ -180,7 +182,7 @@
   };
 
   /* ---------- 3) datos y confirmación ---------- */
-  const resumen = () => el("ul", { className: "r-res" }, ...turnos.map(t => el("li", {}, el("b", {}, diaTxt(t.fecha) + ", " + t.hora), " · " + t.s.nombre)));
+  const resumen = () => el("ul", { className: "r-res" }, ...turnos.map(t => el("li", {}, el("b", {}, diaTxt(t.fecha) + ", " + t.hora), " · " + nom(t.s))));
   const paso3 = (aviso) => {
     const f = el("form", { className: "r-form", noValidate: true });
     f.append(
@@ -232,9 +234,9 @@
 
   /* ---------- 4) éxito ---------- */
   const exito = (d) => {
-    const ts = (d.turnos && d.turnos.length ? d.turnos : turnos.map(t => ({ servicio: t.s.nombre, fecha: t.fecha, hora: t.hora })));
-    const nom = s => typeof s === "string" ? s : (s && s.nombre) || "";
-    const lista = el("ul", { className: "r-res" }, ...ts.map(t => el("li", {}, el("b", {}, diaTxt(t.fecha) + ", " + t.hora), " · " + nom(t.servicio))));
+    const ts = (d.turnos && d.turnos.length ? d.turnos : turnos.map(t => ({ servicio: nom(t.s), fecha: t.fecha, hora: t.hora })));
+    const nomS = s => typeof s === "string" ? s : (s && s.nombre ? nom(s) : "");
+    const lista = el("ul", { className: "r-res" }, ...ts.map(t => el("li", {}, el("b", {}, diaTxt(t.fecha) + ", " + t.hora), " · " + nomS(t.servicio))));
     pantalla(el("div", { className: "r-estado r-exito" }, regaloSVG(true), el("h2", {}, "¡Listo! " + (ts.length > 1 ? "Ya reservamos tus turnos" : "Ya reservamos tu turno")), lista,
       el("p", {}, "En breve Flor te escribe por WhatsApp para confirmarlo."), el("div", { className: "r-acciones" }, ayuda("¿Dudas? Escribile a Flor"))));
   };
