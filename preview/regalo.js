@@ -6,7 +6,7 @@
   const SLUG = "silkderma";
   // Cloudflare Turnstile: site key pública del widget creado para el dominio de la landing.
   // La secret key va solo en NEO (Vercel), nunca acá.
-  const TURNSTILE_SITEKEY = "";
+  const TURNSTILE_SITEKEY = "0x4AAAAAAF2kMUOYYvqCVUrH";
   let WA = "5493775445169";
 
   const $ = id => document.getElementById(id);

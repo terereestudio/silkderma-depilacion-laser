@@ -53,6 +53,9 @@ async def caso(b, nombre, codigo, get, post=None, pasos=None, w=390):
         await route.abort()
 
     await pg.route(API + "**", h)
+    # Turnstile simulado: responde con un token de prueba (la verificación real la hace NEO)
+    stub = "window.turnstile={render:(el,o)=>{setTimeout(()=>o.callback('token-prueba'),50);return 1},reset:()=>{}};window.onTurnstileLoad&&window.onTurnstileLoad();"
+    await pg.route("https://challenges.cloudflare.com/**", lambda r: r.fulfill(status=200, body=stub, content_type="application/javascript"))
     await pg.goto(URL + "?regalo=" + codigo)
     await pg.wait_for_selector("#regaloPantalla > *:not(.r-cargando)", timeout=8000)
     if pasos:
@@ -100,7 +103,7 @@ async def main():
         fl, posts = await caso(b, "combo-exito", "k7p29xqm", lambda e: (200, COMBO),
                                lambda n: (200, {"numero": "0123", "turnos": [{"servicio": "Combo 2", "fecha": "2026-12-10", "hora": "09:40"}]}), p_combo)
         total += len(fl)
-        if posts and not (posts[0].get("servicio_id") == "s2" and posts[0].get("consentimiento") is True and posts[0]["fecha"] == "2026-12-10"):
+        if posts and not (posts[0].get("servicio_id") == "s2" and posts[0].get("consentimiento") is True and posts[0]["fecha"] == "2026-12-10" and posts[0].get("turnstile") == "token-prueba"):
             print("FALLA cuerpo del canje por combo:", posts[0]); total += 1
 
         async def p_monto(pg, f):
