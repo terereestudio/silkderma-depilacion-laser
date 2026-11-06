@@ -1,7 +1,6 @@
 """Genera img/brillos.png: los tres brillos de "Depi Days" como PNG animado (APNG), con fondo transparente.
 Uso: python3 preview/brillos.py   (parte de material/brillos-original.png, estrellas amarillas sobre negro)
 Cada estrella titila por su cuenta (crece y se aclara), desfasadas entre sí, en bucle.
-Genera también img/brillos-navidad.png: la estrella mediana en rojo navideño, las otras doradas.
 """
 import sys
 from pathlib import Path
@@ -55,4 +54,3 @@ def generar(sufijo, rojas=()):
 
 
 generar("")
-generar("-navidad", rojas=(1,))
