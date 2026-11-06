@@ -15,7 +15,7 @@ faltan = [n for n in usadas if not (RAIZ / "img" / n).exists()]
 assert not faltan, f"faltan imágenes en img/ (correr optimizar_imagenes.py): {faltan}"
 
 for destino, prefijo in ((RAIZ / "index.html", "img/"), (P / "silkderma-preview.html", "../img/")):
-    salida = html.replace("{{IMG}}", prefijo)
+    salida = html.replace("{{IMG}}", prefijo).replace("{V}", prefijo.replace("img/", "video/"))
     assert "{{" not in salida, re.findall(r"\{\{[^}]+\}\}", salida)
     destino.write_text(salida)
 print("ok", len(html.encode()) // 1024, "KB de HTML,", len(usadas), "imágenes enlazadas")
