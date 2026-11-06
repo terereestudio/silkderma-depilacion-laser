@@ -120,6 +120,7 @@ header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--crema
 .como small{flex-basis:100%;color:var(--suave);font-size:.84rem}
 @media(max-width:820px){.res-head{grid-template-columns:1fr}.como ol{flex-direction:column}}
 .res-head h2 .dd{font-style:normal;letter-spacing:-.01em}
+.dd-txt{background:linear-gradient(90deg,var(--salvia-prof) 0%,var(--salvia-prof) 35%,#8FC07C 50%,var(--salvia-prof) 65%,var(--salvia-prof) 100%);background-size:250% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:brillo 5s ease-in-out infinite}
 .dd .brillo img{display:inline-block;width:1em;height:1em;vertical-align:-.1em}
 .res-head p{color:var(--suave);max-width:46ch}
 .res-head .gancho{font-family:var(--serif);font-style:italic;font-size:1.2rem;color:var(--salvia-osc);margin-bottom:6px}
@@ -360,7 +361,7 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
 .wa-float svg{width:28px;height:28px;fill:#fff}
 .pend{background:var(--rosa);border-radius:4px;padding:0 4px;font-size:.85em}
 
-@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}.brillo{color:var(--crema)}.combo .precio{color:var(--salvia-prof)}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}.brillo{color:var(--crema)}.combo .precio,.dd-txt{color:var(--salvia-prof)}}
 
 /* Firma Tereré Estudio */
 .firma-te { background: #161415; padding: 14px 16px; text-align: center; }
@@ -446,7 +447,7 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
       <div class="res-head">
         <div>
           <span class="eyebrow" id="ddEyebrow">Monte Caseros</span>
-          <h2 style="margin-top:12px"><span class="dd"><picture class="brillo" aria-hidden="true"><source srcset="img/brillos-quieto.png" media="(prefers-reduced-motion: reduce)"><img src="img/brillos.png" width="64" height="64" alt="" loading="lazy" decoding="async"></picture> Depi Days <picture class="brillo" aria-hidden="true"><source srcset="img/brillos-quieto.png" media="(prefers-reduced-motion: reduce)"><img src="img/brillos.png" width="64" height="64" alt="" loading="lazy" decoding="async"></picture></span></h2>
+          <h2 style="margin-top:12px"><span class="dd"><picture class="brillo" aria-hidden="true"><source srcset="img/brillos-quieto.png" media="(prefers-reduced-motion: reduce)"><img src="img/brillos.png" width="64" height="64" alt="" loading="lazy" decoding="async"></picture> <span class="dd-txt">Depi Days</span> <picture class="brillo" aria-hidden="true"><source srcset="img/brillos-quieto.png" media="(prefers-reduced-motion: reduce)"><img src="img/brillos.png" width="64" height="64" alt="" loading="lazy" decoding="async"></picture></span></h2>
         </div>
         <div>
           <p class="gancho">¿Ya pensaste en empezar láser?</p>
