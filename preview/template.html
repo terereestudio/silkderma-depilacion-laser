@@ -320,11 +320,12 @@ header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--crema
 .proceso .eyebrow{color:var(--beige)}
 .proceso-grid{display:grid;grid-template-columns:1fr 2fr;gap:clamp(28px,4vw,56px);align-items:center}
 .proceso-main{min-width:0}
-.video-flor{display:grid;gap:14px;justify-items:center;text-align:center}
-.video-flor video{width:min(100%,280px);height:auto;aspect-ratio:360/664;border-radius:24px;background:#2c2620;box-shadow:0 24px 50px rgba(0,0,0,.3);object-fit:cover}
+.video-flor{display:grid;gap:8px;justify-items:center;text-align:center}
+.video-flor video{width:min(100%,200px);height:auto;aspect-ratio:360/664;border-radius:24px;background:#2c2620;box-shadow:0 24px 50px rgba(0,0,0,.3);object-fit:cover}
 .video-flor h3{color:var(--crema);font-size:clamp(1.25rem,1.1rem + .6vw,1.5rem);font-style:italic;margin:8px 0 6px}
 .video-flor p{color:rgba(233,227,216,.85);font-size:.92rem;max-width:30ch;margin-inline:auto}
 .proceso-main .timeline{grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+@media(min-width:821px){.proceso{padding-block:clamp(48px,6vw,72px)}.proceso-main .timeline{margin-top:32px}.video-flor p{display:none}}
 @media(max-width:820px){.proceso-grid{grid-template-columns:1fr}.video-flor video{width:min(70vw,260px)}}
 .timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:48px;position:relative}
 .timeline::before{content:"";position:absolute;top:13px;left:var(--l,0px);width:var(--w,0px);height:1px;background:rgba(233,227,216,.3)}
@@ -444,6 +445,13 @@ a.ct:hover{transform:translateY(-2px);border-color:var(--salvia);box-shadow:0 10
 .con-sticker{position:relative}
 @media(max-width:820px){.sticker.solo-pc-st{display:none}.sticker,.hero-photo img.sticker{width:calc(var(--t,64px) * .72)!important}}
 @media (prefers-reduced-motion:reduce){.navidad .hero::before,.sticker{animation:none;opacity:1}}
+/* Compu: el hero entra completo en la primera pantalla (título, botones y foto) */
+@media(min-width:821px){
+  .hero{padding:clamp(20px,3vh,40px) 0 clamp(28px,4vh,52px)}
+  .hero h1{font-size:clamp(2.4rem,1rem + 3.2vw,4rem);margin:12px 0 14px}
+  .hero p.lead{margin-bottom:22px}
+  .hero-photo{width:min(420px,100%,calc((100svh - 150px) * .8))}
+}
 </style>
 </head>
 <body>
